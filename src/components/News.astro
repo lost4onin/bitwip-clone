@@ -22,7 +22,7 @@ const articles = (await getNews(locale)).slice(0, 3);
         articles.map((article, i) => (
           <li data-reveal style={`--reveal-delay:${i}`}>
             <article class="news-card">
-              <div class="news-media">
+              <div class="news-media scroll-zoom" data-scroll>
                 <img
                   src={article.data.image}
                   alt={article.data.alt}

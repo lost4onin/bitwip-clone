@@ -49,7 +49,7 @@ const countFor = (key: string) => work.projects.filter((p) => p.industry === key
         work.projects.map((project, i) => (
           <li class="work-item" data-industry={project.industry}>
             <article class="card" data-reveal style={`--reveal-delay:${i % 2}`}>
-              <div class="card-media">
+              <div class="card-media scroll-zoom" data-scroll>
                 <img
                   src={project.image}
                   alt={project.alt}

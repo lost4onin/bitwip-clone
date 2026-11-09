@@ -14,7 +14,7 @@ const accentWord = afterWords.pop();
 const afterRest = afterWords.join(' ');
 ---
 
-<section class="hero" aria-labelledby="hero-title">
+<section class="hero" data-scroll="exit" aria-labelledby="hero-title">
   <div class="container">
     <p class="eyebrow hero-line" style="--d:0">{hero.eyebrow}</p>
 
@@ -149,6 +149,20 @@ const afterRest = afterWords.join(' ');
 
   .reel-toggle.is-paused .icon-play {
     display: block;
+  }
+
+  /* Leaving the hero: the content zooms out and fades while the
+     showreel pill zooms further into its footage. */
+  @media (prefers-reduced-motion: no-preference) {
+    :global(.js) .hero > .container {
+      transform-origin: 50% 100%;
+      scale: calc(1 - var(--progress, 0) * 0.14);
+      opacity: calc(1 - var(--progress, 0) * 1.3);
+    }
+
+    :global(.js) .reel video {
+      scale: calc(1 + var(--progress, 0) * 0.8);
+    }
   }
 
   /* Entrance: lines rise into place on first load */

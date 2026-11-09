@@ -331,6 +331,20 @@ p {
   transform: none;
 }
 
+/* ---------- Scroll zoom ----------
+   A `.scroll-zoom` frame (or any ancestor) with `data-scroll` gets a
+   --progress value; its image starts zoomed in and eases out while drifting
+   against the scroll. The 1.1 minimum scale keeps a margin for the drift.
+   Uses the individual `scale`/`translate` properties so hover transforms
+   still compose on top. */
+@media (prefers-reduced-motion: no-preference) {
+  .js .scroll-zoom > img {
+    scale: calc(1.3 - var(--progress, 0.5) * 0.2);
+    translate: 0 calc((0.5 - var(--progress, 0.5)) * 8%);
+    will-change: scale, translate;
+  }
+}
+
 /* ---------- Reduced motion ---------- */
 @media (prefers-reduced-motion: reduce) {
   html {
