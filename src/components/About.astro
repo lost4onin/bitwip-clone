@@ -1,0 +1,206 @@
+---
+import { getContent, localeMeta, type Locale } from '../lib/i18n';
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const { about } = getContent(locale);
+const numberFormat = new Intl.NumberFormat(localeMeta[locale].htmlLang);
+---
+
+<section class="section about" id="about" aria-labelledby="about-title">
+  <div class="container">
+    <div class="section-head">
+      <p class="eyebrow" data-reveal>{about.label}</p>
+      <div class="about-intro">
+        <h2 class="h2" id="about-title" data-reveal>{about.title}</h2>
+        <p class="about-body muted" data-reveal style="--reveal-delay:1">{about.body}</p>
+      </div>
+    </div>
+
+    <dl class="stats" data-stats>
+      {
+        about.stats.map((stat, i) => (
+          <div class="stat" data-reveal style={`--reveal-delay:${i}`}>
+            <dt class="stat-label">{stat.label}</dt>
+            <dd class="stat-value">
+              {/* Final value is rendered server-side; JS animates a decorative copy. */}
+              <span class="visually-hidden">
+                {numberFormat.format(stat.value)}
+                {stat.suffix}
+              </span>
+              <span aria-hidden="true">
+                <span data-count-to={stat.value}>{numberFormat.format(stat.value)}</span>
+                <span class="stat-suffix">{stat.suffix}</span>
+              </span>
+            </dd>
+          </div>
+        ))
+      }
+    </dl>
+
+    <div class="gallery">
+      {
+        about.gallery.map((item, i) => (
+          <figure class="gallery-item" data-reveal style={`--reveal-delay:${i % 2}`}>
+            <div class="gallery-frame">
+              <img
+                src={item.src}
+                alt={item.alt}
+                width={item.width}
+                height={item.height}
+                loading="lazy"
+                decoding="async"
+              />
+            </div>
+            <figcaption>
+              <span class="gallery-index" aria-hidden="true">
+                {String(i + 1).padStart(2, '0')}
+              </span>
+              {item.caption}
+            </figcaption>
+          </figure>
+        ))
+      }
+    </div>
+  </div>
+</section>
+
+<style>
+  .about-intro {
+    display: grid;
+    gap: 2rem;
+  }
+
+  .about-body {
+    max-width: 52ch;
+    font-size: var(--fs-lg);
+    line-height: 1.5;
+  }
+
+  /* ---------- Stats ---------- */
+  .stats {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    border-top: 1px solid var(--line);
+  }
+
+  @media (min-width: 56em) {
+    .stats {
+      grid-template-columns: repeat(4, 1fr);
+    }
+  }
+
+  .stat {
+    display: flex;
+    flex-direction: column-reverse;
+    justify-content: flex-end;
+    gap: 0.5rem;
+    padding: clamp(1.5rem, 3vw, 2.5rem) 1rem clamp(1.5rem, 3vw, 2.5rem) 0;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .stat-value {
+    font-size: clamp(3rem, 1.5rem + 5vw, 7rem);
+    font-weight: 500;
+    line-height: 1;
+    letter-spacing: -0.05em;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .stat-suffix {
+    color: var(--accent-text);
+  }
+
+  .stat-label {
+    color: var(--fg-muted);
+  }
+
+  /* ---------- Gallery ---------- */
+  .gallery {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: clamp(1rem, 2vw, 1.75rem);
+    margin-top: clamp(4rem, 8vw, 8rem);
+    align-items: start;
+  }
+
+  @media (min-width: 56em) {
+    .gallery {
+      grid-template-columns: 0.8fr 1.1fr 0.8fr 1.1fr;
+    }
+
+    /* Staggered, editorial rhythm */
+    .gallery-item:nth-child(even) {
+      margin-top: clamp(4rem, 8vw, 9rem);
+    }
+  }
+
+  .gallery-frame {
+    overflow: hidden;
+    border-radius: var(--radius);
+    background: var(--bg-elev);
+  }
+
+  .gallery-frame img {
+    width: 100%;
+    transition: transform var(--dur-slow) var(--ease-out);
+  }
+
+  .gallery-item:hover img {
+    transform: scale(1.05);
+  }
+
+  figcaption {
+    display: flex;
+    gap: 0.75rem;
+    margin-top: 0.85rem;
+    font-size: var(--fs-sm);
+    color: var(--fg-muted);
+  }
+
+  .gallery-index {
+    color: var(--fg);
+    font-variant-numeric: tabular-nums;
+  }
+</style>
+
+<script>
+  const stats = document.querySelector('[data-stats]');
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  if (stats && !reduceMotion && 'IntersectionObserver' in window) {
+    const counters = Array.from(stats.querySelectorAll<HTMLElement>('[data-count-to]'));
+    const format = new Intl.NumberFormat(document.documentElement.lang);
+    const duration = 1800;
+    const easeOutExpo = (t: number) => (t === 1 ? 1 : 1 - Math.pow(2, -10 * t));
+
+    counters.forEach((el) => (el.textContent = format.format(0)));
+
+    const run = (el: HTMLElement) => {
+      const target = Number(el.dataset.countTo);
+      const start = performance.now();
+      const step = (now: number) => {
+        const progress = Math.min((now - start) / duration, 1);
+        el.textContent = format.format(Math.round(target * easeOutExpo(progress)));
+        if (progress < 1) requestAnimationFrame(step);
+      };
+      requestAnimationFrame(step);
+    };
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          if (!entry.isIntersecting) continue;
+          run(entry.target as HTMLElement);
+          observer.unobserve(entry.target);
+        }
+      },
+      { threshold: 0.6 },
+    );
+
+    counters.forEach((el) => observer.observe(el));
+  }
+</script>
