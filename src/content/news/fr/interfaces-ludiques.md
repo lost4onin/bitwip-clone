@@ -8,7 +8,7 @@ image: "/images/news-3.webp"
 alt: "Une manette de jeu sur une table, éclairée par une seule lumière rouge"
 ---
 
-Les jeux vidéo comptent parmi les logiciels les mieux conçus au monde : ils enseignent des systèmes complexes sans une seule page d'aide. Nous les avons étudiés pendant un mois et en avons rapporté trois idées.
+Les jeux vidéo comptent parmi les logiciels les mieux conçus au monde : ils enseignent des systèmes complexes sans une seule page d'aide. Nous les avons étudiés pendant un mois et en avons rapporté trois idées.
 
 ## Apprendre en faisant
 

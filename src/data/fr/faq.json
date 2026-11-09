@@ -2,10 +2,10 @@
   "label": "FAQ",
   "title": "Les questions qu'on nous pose souvent.",
   "items": [
-    { "question": "Quels types de projets acceptez-vous ?", "answer": "Produits numériques, sites web, identités de marque et installations interactives — surtout lorsque design et technologie doivent travailler main dans la main. Les budgets commencent généralement autour de 30 k€." },
-    { "question": "Combien de temps dure un projet type ?", "answer": "Un site web ciblé prend de 6 à 10 semaines. Les produits plus ambitieux sont livrés par phases, avec une version utilisable toutes les quelques semaines." },
-    { "question": "Travaillez-vous avec des clients hors de France ?", "answer": "Oui. Environ la moitié de nos clients sont internationaux, et nos bureaux de Montréal, Tunis et Tokyo nous permettent de couvrir la plupart des fuseaux horaires." },
-    { "question": "Pouvez-vous rejoindre un projet déjà en cours ?", "answer": "Tout à fait. Nous auditons régulièrement des produits existants, puis renforçons les équipes internes en design, front-end ou accessibilité." },
-    { "question": "Proposez-vous un accompagnement après la mise en ligne ?", "answer": "Chaque projet inclut une garantie de 90 jours. Ensuite, nous proposons des contrats de maintenance flexibles et des partenariats produit sur la durée." }
+    { "question": "Quels types de projets acceptez-vous ?", "answer": "Produits numériques, sites web, identités de marque et installations interactives — surtout lorsque design et technologie doivent travailler main dans la main. Les budgets commencent généralement autour de 30 k€." },
+    { "question": "Combien de temps dure un projet type ?", "answer": "Un site web ciblé prend de 6 à 10 semaines. Les produits plus ambitieux sont livrés par phases, avec une version utilisable toutes les quelques semaines." },
+    { "question": "Travaillez-vous avec des clients hors de France ?", "answer": "Oui. Environ la moitié de nos clients sont internationaux, et nos bureaux de Montréal, Tunis et Tokyo nous permettent de couvrir la plupart des fuseaux horaires." },
+    { "question": "Pouvez-vous rejoindre un projet déjà en cours ?", "answer": "Tout à fait. Nous auditons régulièrement des produits existants, puis renforçons les équipes internes en design, front-end ou accessibilité." },
+    { "question": "Proposez-vous un accompagnement après la mise en ligne ?", "answer": "Chaque projet inclut une garantie de 90 jours. Ensuite, nous proposons des contrats de maintenance flexibles et des partenariats produit sur la durée." }
   ]
 }
