@@ -100,5 +100,9 @@ const organization = {
   <body>
     <a class="skip-link" href="#main">{site.skipLink}</a>
     <slot />
+    <script>
+      import { initReveal } from '../scripts/reveal';
+      initReveal();
+    </script>
   </body>
 </html>
