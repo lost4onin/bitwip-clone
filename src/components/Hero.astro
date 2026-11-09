@@ -152,7 +152,7 @@ const afterRest = afterWords.join(' ');
   }
 
   /* Entrance: lines rise into place on first load */
-  .js .hero-line {
+  :global(.js) .hero-line {
     animation: hero-rise var(--dur-slow) var(--ease-out) both;
     animation-delay: calc(100ms + var(--d, 0) * 110ms);
   }
