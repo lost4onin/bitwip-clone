@@ -12,7 +12,7 @@ const { showreel, hero } = getContent(locale).site;
 <section class="showreel" data-scroll="pin" aria-label={showreel.label}>
   <div class="showreel-stage">
     <div class="showreel-frame">
-      <video data-reel muted loop playsinline preload="none" disablepictureinpicture tabindex="-1" aria-hidden="true">
+      <video data-reel muted loop playsinline preload="none" poster="/media/showreel-poster.webp" disablepictureinpicture tabindex="-1" aria-hidden="true">
         <source src="/media/showreel.webm" type="video/webm" />
         <source src="/media/showreel.mp4" type="video/mp4" />
       </video>
