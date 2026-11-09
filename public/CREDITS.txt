@@ -1,0 +1,10 @@
+Media credits
+=============
+
+Images (public/images/*.webp)
+  Free stock photography from Unsplash, fetched in WebP via picsum.photos.
+  Licensed under the Unsplash License: https://unsplash.com/license
+
+Video (public/media/showreel.*)
+  "flower" sample clip from MDN's interactive examples, released under CC0.
+  https://developer.mozilla.org/
