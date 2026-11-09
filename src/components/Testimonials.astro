@@ -35,26 +35,28 @@ const initials = (name: string) =>
       <div class="slides" aria-live="polite" data-slides>
         {
           testimonials.items.map((item, i) => (
-            <figure
+            <div
               class:list={['slide', { 'is-active': i === 0 }]}
               role="group"
               aria-roledescription="slide"
               aria-label={format(testimonials.slideLabel, { index: i + 1, total })}
               data-slide
             >
-              <blockquote class="quote">
-                <p>{item.quote}</p>
-              </blockquote>
-              <figcaption class="author">
-                <span class="avatar" aria-hidden="true">
-                  {initials(item.name)}
-                </span>
-                <span>
-                  <span class="author-name">{item.name}</span>
-                  <span class="author-role">{item.role}</span>
-                </span>
-              </figcaption>
-            </figure>
+              <figure>
+                <blockquote class="quote">
+                  <p>{item.quote}</p>
+                </blockquote>
+                <figcaption class="author">
+                  <span class="avatar" aria-hidden="true">
+                    {initials(item.name)}
+                  </span>
+                  <span>
+                    <span class="author-name">{item.name}</span>
+                    <span class="author-role">{item.role}</span>
+                  </span>
+                </figcaption>
+              </figure>
+            </div>
           ))
         }
       </div>
