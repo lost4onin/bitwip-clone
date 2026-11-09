@@ -1,0 +1,67 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Header from '../components/Header.astro';
+
+// Static hosts serve one 404 page for every path, so it is bilingual.
+const alternates = { en: '/en/', fr: '/fr/' };
+---
+
+<BaseLayout
+  locale="en"
+  title="Page not found — Orbe Studio"
+  description="This page doesn't exist. Head back to the Orbe Studio homepage."
+  alternates={alternates}
+>
+  <meta name="robots" content="noindex" slot="head" />
+  <Header locale="en" alternates={alternates} anchorBase="/en/" />
+  <main id="main" tabindex="-1" class="not-found">
+    <div class="container">
+      <p class="code" aria-hidden="true">4<span>0</span>4</p>
+      <h1 class="h2">This page went off the grid.</h1>
+      <p class="muted" lang="fr">Cette page s'est perdue en chemin.</p>
+      <p class="actions">
+        <a class="btn" href="/en/">Back to the homepage</a>
+        <a class="btn btn--ghost" href="/fr/" lang="fr">Retour à l'accueil</a>
+      </p>
+    </div>
+  </main>
+</BaseLayout>
+
+<style>
+  .not-found {
+    display: flex;
+    align-items: center;
+    min-height: 100svh;
+    padding-block: 8rem 4rem;
+  }
+
+  .code {
+    font-size: clamp(7rem, 3rem + 20vw, 20rem);
+    font-weight: 600;
+    line-height: 0.8;
+    letter-spacing: -0.07em;
+  }
+
+  .code span {
+    font-family: var(--font-serif);
+    font-style: italic;
+    font-weight: 400;
+    color: var(--accent-text);
+  }
+
+  h1 {
+    margin-top: 2rem;
+  }
+
+  .muted {
+    margin-top: 1rem;
+    font-size: var(--fs-lg);
+  }
+
+  .actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    margin-top: 2.5rem;
+  }
+</style>
