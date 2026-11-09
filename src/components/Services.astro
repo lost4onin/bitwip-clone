@@ -1,0 +1,130 @@
+---
+import { getContent, type Locale } from '../lib/i18n';
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const { services } = getContent(locale);
+---
+
+<section class="section services" id="services" aria-labelledby="services-title">
+  <div class="container">
+    <div class="section-head">
+      <p class="eyebrow" data-reveal>{services.label}</p>
+      <h2 class="h2" id="services-title" data-reveal>{services.title}</h2>
+    </div>
+
+    <ol class="service-list" role="list">
+      {
+        services.items.map((service, i) => (
+          <li class="service" data-reveal>
+            <span class="service-index" aria-hidden="true">
+              {String(i + 1).padStart(2, '0')}
+            </span>
+            <div class="service-heading">
+              <h3 class="service-title">{service.title}</h3>
+              <p class="service-desc">{service.description}</p>
+            </div>
+            <ul class="service-points" role="list">
+              {service.points.map((point) => (
+                <li>{point}</li>
+              ))}
+            </ul>
+          </li>
+        ))
+      }
+    </ol>
+  </div>
+</section>
+
+<style>
+  .service-list {
+    border-top: 1px solid var(--line);
+  }
+
+  .service {
+    position: relative;
+    display: grid;
+    gap: 1.25rem 2rem;
+    padding-block: clamp(2rem, 4vw, 3.5rem);
+    border-bottom: 1px solid var(--line);
+    isolation: isolate;
+  }
+
+  @media (min-width: 56em) {
+    .service {
+      grid-template-columns: minmax(4rem, 1fr) 5fr 4fr;
+      align-items: start;
+    }
+  }
+
+  /* Hover: a soft accent wash rises from the bottom of the row */
+  .service::before {
+    content: '';
+    position: absolute;
+    inset: 0 calc(var(--gutter) * -1);
+    z-index: -1;
+    background: var(--bg-elev);
+    transform: scaleY(0);
+    transform-origin: bottom;
+    transition: transform var(--dur) var(--ease-out);
+  }
+
+  .service:hover::before {
+    transform: scaleY(1);
+  }
+
+  .service-index {
+    font-size: var(--fs-sm);
+    color: var(--fg-muted);
+    font-variant-numeric: tabular-nums;
+    padding-top: 0.6em;
+    transition: color var(--dur-fast) ease;
+  }
+
+  .service:hover .service-index {
+    color: var(--accent-text);
+  }
+
+  .service-title {
+    font-size: clamp(2.25rem, 1rem + 4.5vw, 5.5rem);
+    letter-spacing: -0.045em;
+    transition: transform var(--dur) var(--ease-out);
+  }
+
+  @media (hover: hover) {
+    .service:hover .service-title {
+      transform: translateX(0.75rem);
+    }
+  }
+
+  .service-desc {
+    margin-top: 0.85rem;
+    font-size: var(--fs-lg);
+    color: var(--fg-muted);
+  }
+
+  .service-points {
+    display: grid;
+    gap: 0.55rem;
+    padding-top: 0.6em;
+  }
+
+  .service-points li {
+    display: flex;
+    align-items: baseline;
+    gap: 0.75rem;
+  }
+
+  .service-points li::before {
+    content: '';
+    flex: none;
+    width: 0.4rem;
+    height: 0.4rem;
+    border-radius: 50%;
+    background: var(--accent);
+    transform: translateY(-0.15em);
+  }
+</style>
