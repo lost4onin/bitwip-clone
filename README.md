@@ -8,7 +8,9 @@ A dark, editorial homepage for **Orbe Studio**, a fictional creative-tech agency
 
 - **Hero**: big headline with a looping, muted showreel set inside the text, plus a pause/play control
 - **Live office clocks**: Paris, Montréal, Tunis and Tokyo, via `Intl.DateTimeFormat` and IANA time zones
+- **Pinned showreel**: the video starts as a small window between two words and zooms to full screen as you scroll
 - **About**: stats that count up on scroll, and a captioned photo gallery
+- **Scroll rows**: bands of large type and photos that slide sideways in opposite directions as you scroll
 - **Services**: four disciplines with bullet lists
 - **Work**: case-study cards with industry filters stored in the URL (`/en/?industry=fintech`)
 - **Testimonials**: an accessible "01 / 05" carousel and a scrolling client logo ticker
@@ -16,6 +18,7 @@ A dark, editorial homepage for **Orbe Studio**, a fictional creative-tech agency
 - **FAQ**: an accordion built on native `<details>`
 - **English and French** at `/en/` and `/fr/` (the root redirects by browser language)
 - **Dark and light themes**, remembered across visits
+- **Scroll-linked motion**: images zoom out and drift as they pass, and the hero zooms out as you leave it. A small engine (`src/scripts/scroll.ts`) gives every `data-scroll` element a `--progress` value from 0 to 1, and CSS does the rest
 - **SEO**: canonical URLs, hreflang, Open Graph and Twitter cards, JSON-LD, `sitemap.xml` and `robots.txt`
 - **Accessibility**: skip link, keyboard support, `prefers-reduced-motion` support, no axe violations
 
@@ -61,7 +64,7 @@ src/
 ├── layouts/      BaseLayout: <head>, SEO tags, theme script, skip link
 ├── lib/i18n.ts   Locales, content loaders, formatting helpers
 ├── pages/        /, /[lang]/, /[lang]/news/[slug]/, 404, sitemap.xml
-├── scripts/      Shared client scripts (scroll reveal)
+├── scripts/      Shared client scripts (scroll reveal, scroll progress)
 └── styles/       Global tokens, reset and utilities
 ```
 
