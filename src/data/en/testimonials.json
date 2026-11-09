@@ -1,0 +1,16 @@
+{
+  "label": "Clients",
+  "title": "Kind words from people we've worked with.",
+  "previous": "Previous testimonial",
+  "next": "Next testimonial",
+  "carouselLabel": "Client testimonials",
+  "slideLabel": "{index} of {total}",
+  "tickerLabel": "Some of the teams we've worked with",
+  "items": [
+    { "quote": "Orbe didn't just ship an app — they changed how our product team works. Account openings doubled in the first quarter.", "name": "Camille Arnaud", "role": "Head of Product, Ostra Bank" },
+    { "quote": "They understood our archive better than we did. The new collection site made our photographs feel alive again.", "name": "Jonas Weber", "role": "Digital Curator, Musée Lumen" },
+    { "quote": "Eight weeks, zero drama, and a store our customers keep complimenting. I'd hire them again tomorrow.", "name": "Leïla Benali", "role": "Founder, Fernhollow" },
+    { "quote": "A rare mix of poetry and pragmatism. The trip planner is now our most-visited page by far.", "name": "Ingrid Solberg", "role": "Marketing Director, Nordfjell" },
+    { "quote": "Their designers sat with our dispatchers for a week. You can feel that care in every screen.", "name": "Marco Ruiz", "role": "COO, Vexa Motion" }
+  ]
+}

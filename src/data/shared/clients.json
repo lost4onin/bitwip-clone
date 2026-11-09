@@ -1,0 +1,10 @@
+[
+  { "name": "Quillfox",    "shape": "circle" },
+  { "name": "Tidewell",    "shape": "wave" },
+  { "name": "Ostra Bank",  "shape": "square" },
+  { "name": "Fernhollow",  "shape": "leaf" },
+  { "name": "Copperline",  "shape": "bars" },
+  { "name": "Vexa Motion", "shape": "triangle" },
+  { "name": "Brightmoor",  "shape": "sun" },
+  { "name": "Nimbalo",     "shape": "ring" }
+]

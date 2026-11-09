@@ -1,0 +1,24 @@
+{
+  "label": "Projets",
+  "title": "Études de cas choisies.",
+  "filterLabel": "Filtrer par secteur",
+  "all": "Tous",
+  "empty": "Aucun projet dans ce secteur pour le moment.",
+  "resultsAnnouncement": "{count} projets affichés",
+  "challengeLabel": "Défi",
+  "industries": {
+    "fintech": "Fintech",
+    "culture": "Culture",
+    "retail": "Commerce",
+    "tourism": "Tourisme",
+    "mobility": "Mobilité"
+  },
+  "projects": [
+    { "client": "Ostra Bank", "industry": "fintech", "year": 2026, "image": "/images/work-2.webp", "alt": "Un smartphone posé sur une table, lumière douce", "challenge": "Refondre une application bancaire vieillissante pour ouvrir un compte en moins de trois minutes." },
+    { "client": "Musée Lumen", "industry": "culture", "year": 2025, "image": "/images/work-4.webp", "alt": "Un appareil photo argentique posé sur les touches d'un piano", "challenge": "Transformer une archive de 40 000 tirages en une collection en ligne ludique et explorable." },
+    { "client": "Fernhollow", "industry": "retail", "year": 2025, "image": "/images/work-1.webp", "alt": "Un bureau blanc minimaliste avec un portable fermé, des livres et un calendrier", "challenge": "Lancer en huit semaines une boutique e-commerce headless pour une marque d'objets design." },
+    { "client": "Nordfjell", "industry": "tourism", "year": 2024, "image": "/images/work-5.webp", "alt": "Des randonneurs au sommet d'une falaise surplombant un fjord bleu profond", "challenge": "Inspirer le voyage lent avec un planificateur immersif basé sur la météo en temps réel." },
+    { "client": "Vexa Motion", "industry": "mobility", "year": 2024, "image": "/images/work-3.webp", "alt": "Des lunettes posées sur un portable fermé à côté d'une souris sur un bureau en bois", "challenge": "Concevoir un tableau de bord pour piloter 2 000 trottinettes électriques en un coup d'œil." },
+    { "client": "Copperline", "industry": "fintech", "year": 2023, "image": "/images/work-6.webp", "alt": "Photo noir et blanc d'une main sur une souris, à côté d'un clavier et d'une tasse", "challenge": "Créer la marque et le design system d'une plateforme de paiement B2B lancée sur cinq marchés." }
+  ]
+}

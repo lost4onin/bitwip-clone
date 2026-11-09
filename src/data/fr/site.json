@@ -1,0 +1,52 @@
+{
+  "meta": {
+    "title": "Orbe Studio — Là où la tech rencontre la créativité",
+    "description": "Orbe Studio est une agence créative et technologique indépendante qui conçoit produits numériques, marques et expériences immersives pour des équipes ambitieuses.",
+    "ogImageAlt": "Un ordinateur portable et un carnet de wireframes sur un bureau en bois"
+  },
+  "skipLink": "Aller au contenu",
+  "nav": {
+    "menu": "Menu",
+    "close": "Fermer",
+    "label": "Navigation principale",
+    "items": [
+      { "href": "#about",        "label": "À propos" },
+      { "href": "#services",     "label": "Expertises" },
+      { "href": "#work",         "label": "Projets" },
+      { "href": "#testimonials", "label": "Clients" },
+      { "href": "#news",         "label": "Actualités" },
+      { "href": "#faq",          "label": "FAQ" },
+      { "href": "#contact",      "label": "Contact" }
+    ],
+    "language": "Langue",
+    "theme": { "label": "Thème de couleur", "dark": "Sombre", "light": "Clair" }
+  },
+  "hero": {
+    "eyebrow": "Studio créatif & tech indépendant — depuis 2012",
+    "before": "Là où la tech",
+    "after": "rencontre la créativité",
+    "videoLabel": "Showreel : courte boucle vidéo d'une fleur qui s'ouvre",
+    "pauseVideo": "Mettre le showreel en pause",
+    "playVideo": "Lire le showreel",
+    "intro": "Nous concevons et développons des produits numériques, des marques et des expériences que l'on prend plaisir à utiliser.",
+    "cta": "Voir nos projets",
+    "scroll": "Défiler"
+  },
+  "clocks": { "title": "Nos bureaux, en ce moment" },
+  "footer": {
+    "headline": "Un projet en tête ?",
+    "cta": "Parlons-en",
+    "email": "bonjour@orbe-studio.example",
+    "addressTitle": "Studio",
+    "address": ["12 rue des Ateliers", "75011 Paris, France"],
+    "socialTitle": "Suivez-nous",
+    "social": [
+      { "label": "Instagram", "href": "https://instagram.com/" },
+      { "label": "LinkedIn",  "href": "https://linkedin.com/" },
+      { "label": "Behance",   "href": "https://behance.net/" }
+    ],
+    "legal": "Agence fictive. Contenu d'exemple à des fins de démonstration.",
+    "credit": "Conçu et développé par Akrem Medimagh",
+    "backToTop": "Retour en haut"
+  }
+}

@@ -1,0 +1,24 @@
+{
+  "label": "Work",
+  "title": "Selected case studies.",
+  "filterLabel": "Filter by industry",
+  "all": "All",
+  "empty": "No projects in this industry yet.",
+  "resultsAnnouncement": "{count} projects shown",
+  "challengeLabel": "Challenge",
+  "industries": {
+    "fintech": "Fintech",
+    "culture": "Culture",
+    "retail": "Retail",
+    "tourism": "Tourism",
+    "mobility": "Mobility"
+  },
+  "projects": [
+    { "client": "Ostra Bank", "industry": "fintech", "year": 2026, "image": "/images/work-2.webp", "alt": "A smartphone lying on a table, softly lit", "challenge": "Rebuild a legacy banking app so first-time savers can open an account in under three minutes." },
+    { "client": "Musée Lumen", "industry": "culture", "year": 2025, "image": "/images/work-4.webp", "alt": "A vintage film camera resting on piano keys", "challenge": "Turn a photography archive of 40,000 prints into an explorable, playful online collection." },
+    { "client": "Fernhollow", "industry": "retail", "year": 2025, "image": "/images/work-1.webp", "alt": "A minimalist white desk with a closed laptop, books and a desk calendar", "challenge": "Launch a headless e-commerce store for a design-object brand in eight weeks." },
+    { "client": "Nordfjell", "industry": "tourism", "year": 2024, "image": "/images/work-5.webp", "alt": "Hikers on a cliff top overlooking a deep blue fjord", "challenge": "Inspire slow travel with an immersive trip planner built around real-time weather." },
+    { "client": "Vexa Motion", "industry": "mobility", "year": 2024, "image": "/images/work-3.webp", "alt": "Glasses resting on a closed laptop next to a mouse on a wooden desk", "challenge": "Design a fleet dashboard that lets dispatchers manage 2,000 e-scooters at a glance." },
+    { "client": "Copperline", "industry": "fintech", "year": 2023, "image": "/images/work-6.webp", "alt": "Black and white photo of a hand on a mouse beside a keyboard and mug", "challenge": "Create a brand and design system for a B2B payments platform entering five markets." }
+  ]
+}

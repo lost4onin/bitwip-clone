@@ -1,0 +1,16 @@
+{
+  "label": "Clients",
+  "title": "Quelques mots de celles et ceux avec qui nous avons travaillé.",
+  "previous": "Témoignage précédent",
+  "next": "Témoignage suivant",
+  "carouselLabel": "Témoignages clients",
+  "slideLabel": "{index} sur {total}",
+  "tickerLabel": "Quelques équipes avec qui nous avons travaillé",
+  "items": [
+    { "quote": "Orbe n'a pas seulement livré une app : ils ont changé la façon dont notre équipe produit travaille. Les ouvertures de compte ont doublé dès le premier trimestre.", "name": "Camille Arnaud", "role": "Head of Product, Ostra Bank" },
+    { "quote": "Ils ont compris notre fonds mieux que nous. Le nouveau site de la collection a redonné vie à nos photographies.", "name": "Jonas Weber", "role": "Conservateur numérique, Musée Lumen" },
+    { "quote": "Huit semaines, zéro drame, et une boutique que nos clients ne cessent de complimenter. Je les rappellerais demain.", "name": "Leïla Benali", "role": "Fondatrice, Fernhollow" },
+    { "quote": "Un mélange rare de poésie et de pragmatisme. Le planificateur de voyage est devenu notre page la plus visitée.", "name": "Ingrid Solberg", "role": "Directrice marketing, Nordfjell" },
+    { "quote": "Leurs designers ont passé une semaine avec nos dispatchers. Ce soin se ressent dans chaque écran.", "name": "Marco Ruiz", "role": "Directeur des opérations, Vexa Motion" }
+  ]
+}

@@ -1,0 +1,17 @@
+{
+  "label": "About",
+  "title": "A studio of makers, thinkers and tinkerers.",
+  "body": "For over a decade we have helped start-ups, cultural institutions and global brands turn bold ideas into products people love. Strategy, design and engineering sit at the same table — from the first sketch to the last line of code.",
+  "stats": [
+    { "value": 300, "suffix": "+", "label": "projects delivered" },
+    { "value": 14, "suffix": "+", "label": "years of craft" },
+    { "value": 15, "suffix": "+", "label": "team members" },
+    { "value": 4, "suffix": "", "label": "offices worldwide" }
+  ],
+  "gallery": [
+    { "src": "/images/gallery-1.webp", "width": 900, "height": 1125, "alt": "A hand holding a smartphone in front of an open laptop", "caption": "Prototyping mobile flows, Paris studio" },
+    { "src": "/images/gallery-2.webp", "width": 1200, "height": 900, "alt": "A wall covered in open book pages", "caption": "The research wall for an editorial project" },
+    { "src": "/images/gallery-3.webp", "width": 900, "height": 1125, "alt": "A laptop on a wooden café table in warm light", "caption": "Remote Fridays, wherever the coffee is good" },
+    { "src": "/images/gallery-4.webp", "width": 1200, "height": 900, "alt": "Top-down view of a tidy desk with monitor, tablet, keyboard and notebook", "caption": "A designer's setup, mid-sprint" }
+  ]
+}

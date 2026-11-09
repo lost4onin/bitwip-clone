@@ -1,0 +1,17 @@
+{
+  "label": "À propos",
+  "title": "Un studio de créateurs, de penseurs et de bricoleurs.",
+  "body": "Depuis plus de dix ans, nous aidons start-ups, institutions culturelles et grandes marques à transformer des idées audacieuses en produits que l'on adore. Stratégie, design et développement partagent la même table — du premier croquis à la dernière ligne de code.",
+  "stats": [
+    { "value": 300, "suffix": "+", "label": "projets livrés" },
+    { "value": 14, "suffix": "+", "label": "années de savoir-faire" },
+    { "value": 15, "suffix": "+", "label": "membres dans l'équipe" },
+    { "value": 4, "suffix": "", "label": "bureaux dans le monde" }
+  ],
+  "gallery": [
+    { "src": "/images/gallery-1.webp", "width": 900, "height": 1125, "alt": "Une main tenant un smartphone devant un ordinateur portable ouvert", "caption": "Prototypage de parcours mobiles, studio de Paris" },
+    { "src": "/images/gallery-2.webp", "width": 1200, "height": 900, "alt": "Un mur recouvert de pages de livres ouverts", "caption": "Le mur de recherche d'un projet éditorial" },
+    { "src": "/images/gallery-3.webp", "width": 900, "height": 1125, "alt": "Un ordinateur portable sur une table de café en bois, lumière chaude", "caption": "Vendredis à distance, là où le café est bon" },
+    { "src": "/images/gallery-4.webp", "width": 1200, "height": 900, "alt": "Vue de dessus d'un bureau rangé avec écran, tablette, clavier et carnet", "caption": "Le poste d'un·e designer, en plein sprint" }
+  ]
+}

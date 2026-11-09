@@ -1,0 +1,10 @@
+{
+  "label": "Services",
+  "title": "Four disciplines, one team.",
+  "items": [
+    { "title": "Strategy", "description": "Clarity before pixels.", "points": ["Product discovery", "User research & testing", "Digital roadmaps", "Workshops & co-design"] },
+    { "title": "Design", "description": "Interfaces with character.", "points": ["UX & UI design", "Design systems", "Motion design", "Prototyping"] },
+    { "title": "Branding", "description": "Identities that travel.", "points": ["Brand platforms", "Visual identity", "Naming & tone of voice", "Brand guidelines"] },
+    { "title": "Technology", "description": "Built to last, built to scale.", "points": ["Web & mobile apps", "Headless CMS & e-commerce", "Creative coding & WebGL", "Performance & accessibility audits"] }
+  ]
+}

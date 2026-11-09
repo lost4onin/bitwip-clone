@@ -1,0 +1,6 @@
+[
+  { "id": "paris",    "city": { "en": "Paris",    "fr": "Paris" },    "timeZone": "Europe/Paris" },
+  { "id": "montreal", "city": { "en": "Montréal", "fr": "Montréal" }, "timeZone": "America/Toronto" },
+  { "id": "tunis",    "city": { "en": "Tunis",    "fr": "Tunis" },    "timeZone": "Africa/Tunis" },
+  { "id": "tokyo",    "city": { "en": "Tokyo",    "fr": "Tokyo" },    "timeZone": "Asia/Tokyo" }
+]

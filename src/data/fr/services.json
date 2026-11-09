@@ -1,0 +1,10 @@
+{
+  "label": "Expertises",
+  "title": "Quatre disciplines, une seule équipe.",
+  "items": [
+    { "title": "Stratégie", "description": "La clarté avant les pixels.", "points": ["Cadrage produit", "Recherche & tests utilisateurs", "Feuilles de route digitales", "Ateliers & co-conception"] },
+    { "title": "Design", "description": "Des interfaces qui ont du caractère.", "points": ["Design UX & UI", "Design systems", "Motion design", "Prototypage"] },
+    { "title": "Branding", "description": "Des identités qui voyagent.", "points": ["Plateformes de marque", "Identité visuelle", "Naming & ton de voix", "Chartes graphiques"] },
+    { "title": "Technologie", "description": "Pensé pour durer et grandir.", "points": ["Applications web & mobiles", "CMS headless & e-commerce", "Creative coding & WebGL", "Audits performance & accessibilité"] }
+  ]
+}

@@ -1,0 +1,52 @@
+{
+  "meta": {
+    "title": "Orbe Studio — Where tech meets creativity",
+    "description": "Orbe Studio is an independent creative-tech agency crafting digital products, brands and immersive experiences for ambitious teams.",
+    "ogImageAlt": "A laptop and a sketchbook of wireframes on a wooden desk"
+  },
+  "skipLink": "Skip to content",
+  "nav": {
+    "menu": "Menu",
+    "close": "Close",
+    "label": "Main navigation",
+    "items": [
+      { "href": "#about",        "label": "About" },
+      { "href": "#services",     "label": "Services" },
+      { "href": "#work",         "label": "Work" },
+      { "href": "#testimonials", "label": "Clients" },
+      { "href": "#news",         "label": "News" },
+      { "href": "#faq",          "label": "FAQ" },
+      { "href": "#contact",      "label": "Contact" }
+    ],
+    "language": "Language",
+    "theme": { "label": "Colour scheme", "dark": "Dark", "light": "Light" }
+  },
+  "hero": {
+    "eyebrow": "Independent creative-tech studio — since 2012",
+    "before": "Where tech",
+    "after": "meets creativity",
+    "videoLabel": "Showreel: a short looping clip of a flower opening",
+    "pauseVideo": "Pause showreel",
+    "playVideo": "Play showreel",
+    "intro": "We design and build digital products, brands and experiences that people actually enjoy using.",
+    "cta": "See our work",
+    "scroll": "Scroll"
+  },
+  "clocks": { "title": "Our offices, right now" },
+  "footer": {
+    "headline": "Got a project in mind?",
+    "cta": "Let's talk",
+    "email": "hello@orbe-studio.example",
+    "addressTitle": "Studio",
+    "address": ["12 rue des Ateliers", "75011 Paris, France"],
+    "socialTitle": "Follow",
+    "social": [
+      { "label": "Instagram", "href": "https://instagram.com/" },
+      { "label": "LinkedIn",  "href": "https://linkedin.com/" },
+      { "label": "Behance",   "href": "https://behance.net/" }
+    ],
+    "legal": "Fictional agency. Placeholder content for demonstration only.",
+    "credit": "Designed & built by Akrem Medimagh",
+    "backToTop": "Back to top"
+  }
+}
