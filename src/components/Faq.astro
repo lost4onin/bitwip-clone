@@ -1,0 +1,141 @@
+---
+import { getContent, type Locale } from '../lib/i18n';
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const { faq } = getContent(locale);
+---
+
+<section class="section faq" id="faq" aria-labelledby="faq-title">
+  <div class="container">
+    <div class="section-head">
+      <p class="eyebrow" data-reveal>{faq.label}</p>
+      <h2 class="h2" id="faq-title" data-reveal>{faq.title}</h2>
+    </div>
+
+    <!--
+      Native <details>/<summary>: keyboard and screen-reader support,
+      find-in-page and no-JS behaviour come for free.
+    -->
+    <div class="faq-list" data-reveal>
+      {
+        faq.items.map((item) => (
+          <details class="faq-item" name="faq">
+            <summary>
+              <h3 class="faq-question">{item.question}</h3>
+              <span class="faq-icon" aria-hidden="true" />
+            </summary>
+            <div class="faq-answer">
+              <p>{item.answer}</p>
+            </div>
+          </details>
+        ))
+      }
+    </div>
+  </div>
+</section>
+
+<style>
+  .faq-list {
+    border-top: 1px solid var(--line);
+  }
+
+  @media (min-width: 60em) {
+    .faq-list {
+      /* Align with the second column of .section-head (1fr 3fr, 1.5rem gap) */
+      margin-left: calc((100% - 1.5rem) / 4 + 1.5rem);
+    }
+  }
+
+  .faq-item {
+    border-bottom: 1px solid var(--line);
+    interpolate-size: allow-keywords;
+  }
+
+  /* Smooth height animation where ::details-content is supported */
+  .faq-item::details-content {
+    block-size: 0;
+    overflow: hidden;
+    transition:
+      block-size var(--dur) var(--ease-out),
+      content-visibility var(--dur) allow-discrete;
+  }
+
+  .faq-item[open]::details-content {
+    block-size: auto;
+  }
+
+  summary {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1.5rem;
+    padding-block: clamp(1.25rem, 2.5vw, 1.85rem);
+    cursor: pointer;
+    list-style: none;
+  }
+
+  summary::-webkit-details-marker {
+    display: none;
+  }
+
+  .faq-question {
+    font-size: clamp(1.25rem, 1rem + 1vw, 1.85rem);
+    font-weight: 500;
+    line-height: 1.2;
+    letter-spacing: -0.025em;
+    transition: color var(--dur-fast) ease;
+  }
+
+  summary:hover .faq-question {
+    color: var(--accent-text);
+  }
+
+  /* Plus that rotates into a minus */
+  .faq-icon {
+    position: relative;
+    flex: none;
+    width: 2.75rem;
+    height: 2.75rem;
+    border-radius: 50%;
+    box-shadow: inset 0 0 0 1px var(--line);
+    transition: background-color var(--dur-fast) ease, color var(--dur-fast) ease, box-shadow var(--dur-fast) ease;
+  }
+
+  .faq-icon::before,
+  .faq-icon::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0.9rem;
+    height: 1.5px;
+    background: currentColor;
+    translate: -50% -50%;
+    transition: rotate var(--dur) var(--ease-out);
+  }
+
+  .faq-icon::after {
+    rotate: 90deg;
+  }
+
+  .faq-item[open] .faq-icon {
+    background: var(--accent);
+    color: var(--accent-ink);
+    box-shadow: none;
+  }
+
+  .faq-item[open] .faq-icon::after {
+    rotate: 0deg;
+  }
+
+  .faq-answer {
+    max-width: 60ch;
+    padding-bottom: clamp(1.25rem, 2.5vw, 2rem);
+    color: var(--fg-muted);
+    font-size: var(--fs-lg);
+  }
+</style>
