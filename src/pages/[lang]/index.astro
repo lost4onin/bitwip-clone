@@ -7,6 +7,7 @@ import About from '../../components/About.astro';
 import Services from '../../components/Services.astro';
 import Work from '../../components/Work.astro';
 import Testimonials from '../../components/Testimonials.astro';
+import LogoTicker from '../../components/LogoTicker.astro';
 import { getContent, locales, type Locale } from '../../lib/i18n';
 
 export function getStaticPaths() {
@@ -31,6 +32,8 @@ const alternates = Object.fromEntries(locales.map((l) => [l, `/${l}/`]));
     <About locale={locale} />
     <Services locale={locale} />
     <Work locale={locale} />
-    <Testimonials locale={locale} />
+    <Testimonials locale={locale}>
+      <div class="container"><LogoTicker label={content.testimonials.tickerLabel} /></div>
+    </Testimonials>
   </main>
 </BaseLayout>
