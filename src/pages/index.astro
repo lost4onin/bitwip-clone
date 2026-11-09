@@ -1,4 +1,33 @@
 ---
-// Temporary placeholder; replaced by the language redirect later.
+/**
+ * The site root has no content of its own: send visitors to the French
+ * version if their browser prefers French, otherwise to English.
+ * The meta refresh + link keep it working without JavaScript.
+ */
 ---
-<p>Orbe Studio — coming soon.</p>
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Orbe Studio</title>
+    <meta name="robots" content="noindex" />
+    <link rel="canonical" href={new URL('/en/', Astro.site).href} />
+    <script is:inline>
+      (function () {
+        var langs = navigator.languages || [navigator.language || 'en'];
+        var fr = langs.some(function (l) { return /^fr\b/i.test(l); });
+        location.replace(fr ? '/fr/' : '/en/');
+      })();
+    </script>
+    <meta http-equiv="refresh" content="1; url=/en/" />
+    <style>
+      body { margin: 0; min-height: 100vh; display: grid; place-items: center; background: #0b0b0c; color: #f2f1ec; font-family: system-ui, sans-serif; }
+      a { color: #d4ff3f; }
+    </style>
+  </head>
+  <body>
+    <p><a href="/en/">English</a> · <a href="/fr/" lang="fr">Français</a></p>
+  </body>
+</html>
