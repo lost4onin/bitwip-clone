@@ -5,6 +5,7 @@ import Hero from '../../components/Hero.astro';
 import Clocks from '../../components/Clocks.astro';
 import Showreel from '../../components/Showreel.astro';
 import About from '../../components/About.astro';
+import ScrollRows from '../../components/ScrollRows.astro';
 import Services from '../../components/Services.astro';
 import Work from '../../components/Work.astro';
 import Testimonials from '../../components/Testimonials.astro';
@@ -35,6 +36,7 @@ const alternates = Object.fromEntries(locales.map((l) => [l, `/${l}/`]));
     <Clocks locale={locale} />
     <Showreel locale={locale} />
     <About locale={locale} />
+    <ScrollRows locale={locale} />
     <Services locale={locale} />
     <Work locale={locale} />
     <Testimonials locale={locale}>
