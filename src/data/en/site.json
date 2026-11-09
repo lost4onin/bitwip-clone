@@ -60,6 +60,12 @@
   "clocks": {
     "title": "Our offices, right now"
   },
+  "showreel": {
+    "label": "Showreel",
+    "before": "Show",
+    "after": "reel",
+    "caption": "Selected moments, 2012–2026"
+  },
   "footer": {
     "headline": "Got a project in mind?",
     "cta": "Let's talk",

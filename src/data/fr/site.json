@@ -60,6 +60,12 @@
   "clocks": {
     "title": "Nos bureaux, en ce moment"
   },
+  "showreel": {
+    "label": "Showreel",
+    "before": "Show",
+    "after": "reel",
+    "caption": "Quelques instants choisis, 2012–2026"
+  },
   "footer": {
     "headline": "Un projet en tête ?",
     "cta": "Parlons-en",

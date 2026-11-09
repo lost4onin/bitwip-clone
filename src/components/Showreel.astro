@@ -1,0 +1,251 @@
+---
+import { getContent, type Locale } from '../lib/i18n';
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const { showreel, hero } = getContent(locale).site;
+---
+
+<section class="showreel" data-scroll="pin" aria-label={showreel.label}>
+  <div class="showreel-stage">
+    <div class="showreel-frame">
+      <video data-reel muted loop playsinline preload="none" disablepictureinpicture tabindex="-1" aria-hidden="true">
+        <source src="/media/showreel.webm" type="video/webm" />
+        <source src="/media/showreel.mp4" type="video/mp4" />
+      </video>
+    </div>
+
+    <p class="showreel-word showreel-word--before" aria-hidden="true">{showreel.before}</p>
+    <p class="showreel-word showreel-word--after" aria-hidden="true"><em class="serif">{showreel.after}</em></p>
+
+    <div class="showreel-foot">
+      <p class="showreel-caption">
+        <span class="visually-hidden">{hero.videoLabel}. </span>
+        {showreel.caption}
+      </p>
+      <button
+        class="icon-btn showreel-toggle"
+        type="button"
+        data-reel-toggle
+        aria-label={hero.playVideo}
+        data-label-pause={hero.pauseVideo}
+        data-label-play={hero.playVideo}
+        hidden
+      >
+        <svg class="icon-pause" width="14" height="14" viewBox="0 0 14 14" aria-hidden="true">
+          <rect x="2" y="1" width="3.5" height="12" rx="1" fill="currentColor"></rect>
+          <rect x="8.5" y="1" width="3.5" height="12" rx="1" fill="currentColor"></rect>
+        </svg>
+        <svg class="icon-play" width="14" height="14" viewBox="0 0 14 14" aria-hidden="true">
+          <path d="M3 1.5v11l9.5-5.5z" fill="currentColor"></path>
+        </svg>
+      </button>
+    </div>
+  </div>
+</section>
+
+<style>
+  /* ---------- Static layout (no JS or reduced motion) ---------- */
+  .showreel-stage {
+    position: relative;
+    width: min(100% - 2 * var(--gutter), var(--max-width));
+    margin-inline: auto;
+    padding-block: clamp(3rem, 6vw, 5rem);
+  }
+
+  .showreel-frame {
+    overflow: hidden;
+    aspect-ratio: 16 / 9;
+    border-radius: var(--radius);
+    background: var(--accent);
+  }
+
+  .showreel-frame video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .showreel-word {
+    display: none;
+  }
+
+  .showreel-foot {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-top: 1rem;
+  }
+
+  .showreel-caption {
+    font-size: var(--fs-sm);
+    color: var(--fg-muted);
+  }
+
+  .showreel-toggle {
+    background: var(--bg);
+  }
+
+  .showreel-toggle .icon-play,
+  .showreel-toggle.is-paused .icon-pause {
+    display: none;
+  }
+
+  .showreel-toggle.is-paused .icon-play {
+    display: block;
+  }
+
+  /* ---------- Pinned zoom scene ---------- */
+  @media (prefers-reduced-motion: no-preference) {
+    :global(.js) .showreel {
+      --inset-x: 12%;
+      --inset-y: 30%;
+      /* The frame finishes growing at 65% of the track, then holds. */
+      --grow: clamp(0, var(--progress, 0) / 0.65, 1);
+      --shrink: calc(1 - var(--grow));
+      height: 280svh;
+    }
+
+    @media (min-width: 48em) {
+      :global(.js) .showreel {
+        --inset-x: 33%;
+        --inset-y: 27%;
+      }
+    }
+
+    :global(.js) .showreel-stage {
+      position: sticky;
+      top: 0;
+      width: 100%;
+      height: 100svh;
+      padding: 0;
+      overflow: hidden;
+    }
+
+    :global(.js) .showreel-frame {
+      position: absolute;
+      inset: 0;
+      aspect-ratio: auto;
+      border-radius: 0;
+      clip-path: inset(
+        calc(var(--shrink) * var(--inset-y)) calc(var(--shrink) * var(--inset-x))
+          round calc(var(--shrink) * 2.5rem)
+      );
+      will-change: clip-path;
+    }
+
+    /* The window zooms in while the footage inside eases out of a close crop. */
+    :global(.js) .showreel-frame video {
+      scale: calc(1.4 - var(--grow) * 0.4);
+      will-change: scale;
+    }
+
+    :global(.js) .showreel-word {
+      display: block;
+      position: absolute;
+      top: 50%;
+      margin: 0;
+      font-size: clamp(3rem, 1rem + 9vw, 11rem);
+      font-weight: 500;
+      line-height: 1;
+      letter-spacing: -0.055em;
+      opacity: calc(1 - var(--grow) * 1.6);
+      pointer-events: none;
+    }
+
+    :global(.js) .showreel-word .serif {
+      color: var(--accent-text);
+    }
+
+    /* Narrow screens: words sit above and below the frame. */
+    :global(.js) .showreel-word--before {
+      left: 50%;
+      top: calc(var(--inset-y) - 0.2em);
+      translate: -50% calc(-100% - var(--grow) * 30vh);
+    }
+
+    :global(.js) .showreel-word--after {
+      left: 50%;
+      top: calc(100% - var(--inset-y) + 0.2em);
+      translate: -50% calc(var(--grow) * 30vh);
+    }
+
+    /* Wide screens: words flank the frame and are pushed outwards. */
+    @media (min-width: 48em) {
+      :global(.js) .showreel-word--before {
+        left: auto;
+        top: 50%;
+        right: calc(100% - var(--inset-x) + 0.18em);
+        translate: calc(var(--grow) * -40vw) -50%;
+      }
+
+      :global(.js) .showreel-word--after {
+        top: 50%;
+        left: calc(100% - var(--inset-x) + 0.18em);
+        translate: calc(var(--grow) * 40vw) -50%;
+      }
+    }
+
+    :global(.js) .showreel-foot {
+      position: absolute;
+      inset: auto 0 0;
+      margin: 0;
+      padding: clamp(1.25rem, 3vw, 2.5rem);
+    }
+
+    /* The caption appears once the video fills the screen. */
+    :global(.js) .showreel-caption {
+      color: #fff;
+      font-size: var(--fs-base);
+      text-shadow: 0 1px 12px rgb(0 0 0 / 0.5);
+      opacity: clamp(0, (var(--progress, 0) - 0.55) * 6, 1);
+    }
+  }
+</style>
+
+<script>
+  const section = document.querySelector<HTMLElement>('.showreel');
+  const video = document.querySelector<HTMLVideoElement>('[data-reel]');
+  const toggle = document.querySelector<HTMLButtonElement>('[data-reel-toggle]');
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+
+  if (section && video && toggle) {
+    toggle.hidden = false;
+    // Once the visitor pauses, scrolling back into view no longer restarts it.
+    let pausedByUser = reduceMotion.matches;
+
+    const sync = () => {
+      const paused = video.paused;
+      toggle.classList.toggle('is-paused', paused);
+      toggle.setAttribute('aria-label', paused ? toggle.dataset.labelPlay! : toggle.dataset.labelPause!);
+    };
+
+    const play = () => video.play().catch(sync);
+
+    sync();
+    video.addEventListener('play', sync);
+    video.addEventListener('pause', sync);
+
+    toggle.addEventListener('click', () => {
+      pausedByUser = !video.paused;
+      if (video.paused) play();
+      else video.pause();
+    });
+
+    reduceMotion.addEventListener('change', (e) => {
+      if (!e.matches) return;
+      pausedByUser = true;
+      video.pause();
+    });
+
+    // Only play while the scene is on screen.
+    new IntersectionObserver(([entry]) => {
+      if (entry.isIntersecting && !pausedByUser) play();
+      else if (!entry.isIntersecting) video.pause();
+    }).observe(section);
+  }
+</script>

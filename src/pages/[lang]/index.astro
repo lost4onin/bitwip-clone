@@ -3,6 +3,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import Header from '../../components/Header.astro';
 import Hero from '../../components/Hero.astro';
 import Clocks from '../../components/Clocks.astro';
+import Showreel from '../../components/Showreel.astro';
 import About from '../../components/About.astro';
 import Services from '../../components/Services.astro';
 import Work from '../../components/Work.astro';
@@ -32,6 +33,7 @@ const alternates = Object.fromEntries(locales.map((l) => [l, `/${l}/`]));
   <main id="main" tabindex="-1">
     <Hero locale={locale} />
     <Clocks locale={locale} />
+    <Showreel locale={locale} />
     <About locale={locale} />
     <Services locale={locale} />
     <Work locale={locale} />
