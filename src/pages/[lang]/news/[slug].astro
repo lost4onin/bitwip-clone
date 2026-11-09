@@ -1,0 +1,142 @@
+---
+import { render } from 'astro:content';
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import Header from '../../../components/Header.astro';
+import { formatDate, getContent, getNews, locales, type Locale } from '../../../lib/i18n';
+
+export async function getStaticPaths() {
+  const all = (await Promise.all(locales.map(async (lang) => ({ lang, items: await getNews(lang) })))).flatMap(
+    ({ lang, items }) => items.map((article) => ({ lang, article })),
+  );
+
+  return all.map(({ lang, article }) => {
+    // Find the same article in every language (matched by `key`) for hreflang + the switcher.
+    const alternates = Object.fromEntries(
+      all
+        .filter((other) => other.article.data.key === article.data.key)
+        .map((other) => [other.lang, `/${other.lang}/news/${other.article.slug}/`]),
+    );
+    return { params: { lang, slug: article.slug }, props: { article, alternates } };
+  });
+}
+
+const { article, alternates } = Astro.props;
+const locale = Astro.params.lang as Locale;
+const { site, news } = getContent(locale);
+const { Content } = await render(article);
+---
+
+<BaseLayout
+  locale={locale}
+  title={`${article.data.title} — Orbe Studio`}
+  description={article.data.excerpt}
+  alternates={alternates}
+  image={article.data.image}
+  imageAlt={article.data.alt}
+  type="article"
+  publishedTime={article.data.date}
+>
+  <Header locale={locale} alternates={alternates} anchorBase={`/${locale}/`} />
+  <main id="main" tabindex="-1" class="article">
+    <article class="container">
+      <a class="back link" href={`/${locale}/#news`}>← {news.back}</a>
+      <header class="article-head">
+        <p class="eyebrow">
+          {article.data.category} ·
+          <time datetime={article.data.date.toISOString().slice(0, 10)}>{formatDate(article.data.date, locale)}</time>
+        </p>
+        <h1 class="article-title">{article.data.title}</h1>
+        <p class="article-lede">{article.data.excerpt}</p>
+      </header>
+      <img
+        class="article-image"
+        src={article.data.image}
+        alt={article.data.alt}
+        width="1200"
+        height="800"
+        fetchpriority="high"
+      />
+      <div class="prose">
+        <Content />
+      </div>
+      <p class="article-foot">
+        <a class="btn btn--ghost" href={`/${locale}/#news`}>← {news.back}</a>
+        <a class="link" href={`mailto:${site.footer.email}`}>{site.footer.email}</a>
+      </p>
+    </article>
+  </main>
+</BaseLayout>
+
+<style>
+  .article {
+    padding-block: 8rem var(--section-space);
+  }
+
+  .article > .container {
+    max-width: 60rem;
+  }
+
+  .back {
+    display: inline-block;
+    margin-bottom: 3rem;
+    font-size: var(--fs-sm);
+    color: var(--fg-muted);
+  }
+
+  .article-head {
+    display: grid;
+    gap: 1.5rem;
+    margin-bottom: 3rem;
+  }
+
+  .article-title {
+    font-size: clamp(2.5rem, 1.25rem + 5vw, 5.5rem);
+    letter-spacing: -0.045em;
+  }
+
+  .article-lede {
+    font-size: var(--fs-lg);
+    color: var(--fg-muted);
+    max-width: 50ch;
+  }
+
+  .article-image {
+    width: 100%;
+    border-radius: var(--radius);
+    margin-bottom: clamp(3rem, 6vw, 5rem);
+  }
+
+  .prose {
+    max-width: 65ch;
+    font-size: var(--fs-lg);
+    line-height: 1.65;
+  }
+
+  .prose :global(h2) {
+    margin-block: 2.5em 0.6em;
+    font-size: var(--fs-xl);
+    letter-spacing: -0.03em;
+  }
+
+  .prose :global(p + p) {
+    margin-top: 1em;
+  }
+
+  .prose :global(code) {
+    padding: 0.1em 0.4em;
+    border-radius: 0.3em;
+    background: var(--bg-elev);
+    font-size: 0.85em;
+  }
+
+  .article-foot {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1.5rem;
+    margin-top: clamp(4rem, 8vw, 6rem);
+    padding-top: 2rem;
+    border-top: 1px solid var(--line);
+  }
+</style>

@@ -9,6 +9,8 @@ import { z } from 'astro/zod';
 const news = defineCollection({
   loader: glob({ pattern: '**/*.md', base: './src/content/news' }),
   schema: z.object({
+    /** Shared by every translation of the same article; links /en ↔ /fr. */
+    key: z.string(),
     title: z.string(),
     date: z.coerce.date(),
     category: z.string(),

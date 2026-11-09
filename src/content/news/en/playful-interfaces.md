@@ -1,4 +1,5 @@
 ---
+key: "playful-interfaces"
 title: "What games taught us about playful interfaces"
 date: 2026-07-21
 category: "Insight"

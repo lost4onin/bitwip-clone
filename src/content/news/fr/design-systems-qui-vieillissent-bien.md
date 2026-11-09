@@ -1,4 +1,5 @@
 ---
+key: "design-systems"
 title: "Des design systems qui vieillissent bien"
 date: 2026-10-14
 category: "Design"

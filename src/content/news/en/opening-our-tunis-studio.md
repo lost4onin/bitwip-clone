@@ -1,4 +1,5 @@
 ---
+key: "tunis-studio"
 title: "We're opening a studio in Tunis"
 date: 2026-09-02
 category: "Studio"

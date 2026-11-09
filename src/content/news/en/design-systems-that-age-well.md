@@ -1,4 +1,5 @@
 ---
+key: "design-systems"
 title: "Design systems that age well"
 date: 2026-10-14
 category: "Design"

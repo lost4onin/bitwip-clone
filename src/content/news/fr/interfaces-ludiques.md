@@ -1,4 +1,5 @@
 ---
+key: "playful-interfaces"
 title: "Ce que les jeux vidéo nous ont appris sur les interfaces ludiques"
 date: 2026-07-21
 category: "Réflexion"
