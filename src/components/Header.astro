@@ -235,9 +235,9 @@ const { nav } = site;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    gap: 3rem;
+    gap: 2rem;
     min-height: 100%;
-    padding-block: 7rem 2rem;
+    padding-block: 6rem 1.5rem;
   }
 
   .menu-links a {
@@ -245,7 +245,8 @@ const { nav } = site;
     align-items: baseline;
     gap: 1rem;
     padding-block: 0.15em;
-    font-size: clamp(2.5rem, 1rem + 6vw, 6.5rem);
+    /* Capped by viewport height so all seven links fit without scrolling */
+    font-size: clamp(2.25rem, min(1rem + 6vw, 7.5vh), 6.5rem);
     font-weight: 500;
     line-height: 1.05;
     letter-spacing: -0.04em;
