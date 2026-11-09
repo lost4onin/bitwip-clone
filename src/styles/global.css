@@ -16,7 +16,7 @@
   --fs-lg: clamp(1.125rem, 1rem + 0.6vw, 1.5rem);
   --fs-xl: clamp(1.5rem, 1.1rem + 1.6vw, 2.5rem);
   --fs-h2: clamp(2.5rem, 1.2rem + 5vw, 6rem);
-  --fs-display: clamp(3.25rem, 0.8rem + 10vw, 11.5rem);
+  --fs-display: clamp(3.5rem, 0.8rem + 10vw, 11.5rem);
 
   /* Space */
   --gutter: clamp(1rem, 4vw, 3rem);

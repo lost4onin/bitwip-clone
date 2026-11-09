@@ -1,0 +1,192 @@
+---
+import { getContent, type Locale } from '../lib/i18n';
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const { hero } = getContent(locale).site;
+
+// The last word of the headline is set in the italic serif for contrast.
+const afterWords = hero.after.split(' ');
+const accentWord = afterWords.pop();
+const afterRest = afterWords.join(' ');
+---
+
+<section class="hero" aria-labelledby="hero-title">
+  <div class="container">
+    <p class="eyebrow hero-line" style="--d:0">{hero.eyebrow}</p>
+
+    <h1 class="hero-title" id="hero-title">
+      <span class="hero-line" style="--d:1">{hero.before}</span>
+      <span class="reel hero-line" style="--d:2" aria-hidden="true">
+        <video data-showreel muted loop playsinline preload="metadata" disablepictureinpicture tabindex="-1">
+          <source src="/media/showreel.webm" type="video/webm" />
+          <source src="/media/showreel.mp4" type="video/mp4" />
+        </video>
+      </span>
+      <span class="hero-line" style="--d:3">
+        {afterRest} <em class="serif">{accentWord}</em>
+      </span>
+    </h1>
+
+    <div class="hero-foot hero-line" style="--d:4">
+      <p class="hero-intro">{hero.intro}</p>
+
+      <div class="hero-actions">
+        <a class="btn" href="#work">
+          {hero.cta}
+          <svg class="arrow" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true">
+            <path d="M3 8h10M9 4l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"></path>
+          </svg>
+        </a>
+
+        <button
+          class="icon-btn reel-toggle"
+          type="button"
+          data-showreel-toggle
+          aria-label={hero.pauseVideo}
+          data-label-pause={hero.pauseVideo}
+          data-label-play={hero.playVideo}
+          hidden
+        >
+          <svg class="icon-pause" width="14" height="14" viewBox="0 0 14 14" aria-hidden="true">
+            <rect x="2" y="1" width="3.5" height="12" rx="1" fill="currentColor"></rect>
+            <rect x="8.5" y="1" width="3.5" height="12" rx="1" fill="currentColor"></rect>
+          </svg>
+          <svg class="icon-play" width="14" height="14" viewBox="0 0 14 14" aria-hidden="true">
+            <path d="M3 1.5v11l9.5-5.5z" fill="currentColor"></path>
+          </svg>
+        </button>
+      </div>
+    </div>
+    <p class="visually-hidden">{hero.videoLabel}</p>
+  </div>
+</section>
+
+<style>
+  .hero {
+    display: flex;
+    align-items: flex-end;
+    min-height: 100svh;
+    padding-block: 8rem clamp(2.5rem, 6vw, 5rem);
+  }
+
+  .hero-title {
+    margin-block: 1.75rem clamp(2.5rem, 6vw, 5rem);
+    font-size: var(--fs-display);
+    line-height: 0.92;
+    letter-spacing: -0.055em;
+    text-wrap: initial;
+  }
+
+  .hero-title > span {
+    display: inline-block;
+    vertical-align: middle;
+  }
+
+  .hero-title .serif {
+    font-size: 1.08em;
+    letter-spacing: -0.02em;
+    color: var(--accent-text);
+  }
+
+  /* The showreel sits inside the headline as a rounded "pill" */
+  .reel {
+    width: 1.9em;
+    height: 0.82em;
+    margin-inline: 0.06em 0.12em;
+    border-radius: var(--radius-pill);
+    overflow: hidden;
+    background: var(--accent);
+    transform: translateY(-0.04em);
+  }
+
+  .reel video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform var(--dur-slow) var(--ease-out);
+  }
+
+  .reel:hover video {
+    transform: scale(1.08);
+  }
+
+  .hero-foot {
+    display: grid;
+    gap: 2rem;
+    align-items: end;
+    padding-top: 2rem;
+    border-top: 1px solid var(--line);
+  }
+
+  @media (min-width: 48em) {
+    .hero-foot {
+      grid-template-columns: 1fr auto;
+    }
+  }
+
+  .hero-intro {
+    max-width: 34ch;
+    font-size: var(--fs-lg);
+    line-height: 1.4;
+    color: var(--fg-muted);
+  }
+
+  .hero-actions {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+
+  .reel-toggle .icon-play,
+  .reel-toggle.is-paused .icon-pause {
+    display: none;
+  }
+
+  .reel-toggle.is-paused .icon-play {
+    display: block;
+  }
+
+  /* Entrance: lines rise into place on first load */
+  .js .hero-line {
+    animation: hero-rise var(--dur-slow) var(--ease-out) both;
+    animation-delay: calc(100ms + var(--d, 0) * 110ms);
+  }
+
+  @keyframes hero-rise {
+    from {
+      opacity: 0;
+      transform: translateY(0.6em);
+    }
+  }
+</style>
+
+<script>
+  const video = document.querySelector<HTMLVideoElement>('[data-showreel]');
+  const toggle = document.querySelector<HTMLButtonElement>('[data-showreel-toggle]');
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+
+  if (video && toggle) {
+    toggle.hidden = false;
+
+    const sync = () => {
+      const paused = video.paused;
+      toggle.classList.toggle('is-paused', paused);
+      toggle.setAttribute('aria-label', paused ? toggle.dataset.labelPlay! : toggle.dataset.labelPause!);
+    };
+
+    const play = () => video.play().catch(() => sync());
+
+    // Autoplay only when the visitor hasn't asked for reduced motion.
+    if (!reduceMotion.matches) play();
+    sync();
+
+    video.addEventListener('play', sync);
+    video.addEventListener('pause', sync);
+    toggle.addEventListener('click', () => (video.paused ? play() : video.pause()));
+    reduceMotion.addEventListener('change', (e) => e.matches && video.pause());
+  }
+</script>
