@@ -69,8 +69,9 @@ const afterRest = afterWords.join(' ');
   .hero {
     display: flex;
     align-items: flex-end;
-    min-height: 100svh;
-    padding-block: 8rem clamp(2.5rem, 6vw, 5rem);
+    /* Leave room for the office clocks to peek in below the fold */
+    min-height: calc(100svh - 7.5rem);
+    padding-block: 8rem clamp(2.5rem, 5vw, 4rem);
   }
 
   .hero-title {

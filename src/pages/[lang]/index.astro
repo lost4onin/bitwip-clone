@@ -2,6 +2,7 @@
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import Header from '../../components/Header.astro';
 import Hero from '../../components/Hero.astro';
+import Clocks from '../../components/Clocks.astro';
 import { getContent, locales, type Locale } from '../../lib/i18n';
 
 export function getStaticPaths() {
@@ -22,5 +23,6 @@ const alternates = Object.fromEntries(locales.map((l) => [l, `/${l}/`]));
   <Header locale={locale} alternates={alternates} />
   <main id="main" tabindex="-1">
     <Hero locale={locale} />
+    <Clocks locale={locale} />
   </main>
 </BaseLayout>

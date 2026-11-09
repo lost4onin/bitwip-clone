@@ -1,0 +1,172 @@
+---
+import offices from '../data/shared/offices.json';
+import { getContent, localeMeta, type Locale } from '../lib/i18n';
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const { clocks } = getContent(locale).site;
+const lang = localeMeta[locale].htmlLang;
+---
+
+<section class="clocks" aria-labelledby="clocks-title">
+  <div class="container">
+    <h2 class="visually-hidden" id="clocks-title">{clocks.title}</h2>
+    <ul class="clock-list" role="list" data-clocks data-lang={lang}>
+      {
+        offices.map((office) => (
+          <li class="clock">
+            <span class="clock-city">{office.city[locale]}</span>
+            <time class="clock-time" data-clock={office.timeZone}>
+              --:--
+            </time>
+            <span class="clock-meta">
+              <span class="clock-dot" data-clock-dot aria-hidden="true" />
+              <span data-clock-offset>{office.timeZone.split('/').pop()?.replace('_', ' ')}</span>
+            </span>
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+</section>
+
+<style>
+  .clocks {
+    border-block: 1px solid var(--line);
+  }
+
+  .clock-list {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  @media (min-width: 56em) {
+    .clock-list {
+      grid-template-columns: repeat(4, 1fr);
+    }
+  }
+
+  .clock {
+    display: grid;
+    gap: 0.35rem;
+    padding: clamp(1.25rem, 3vw, 2rem) clamp(0.75rem, 2vw, 1.5rem);
+  }
+
+  .clock:not(:first-child) {
+    border-left: 1px solid var(--line);
+  }
+
+  @media (max-width: 55.99em) {
+    .clock:nth-child(odd) {
+      border-left: 0;
+      padding-left: 0;
+    }
+
+    .clock:nth-child(n + 3) {
+      border-top: 1px solid var(--line);
+    }
+  }
+
+  @media (min-width: 56em) {
+    .clock:first-child {
+      padding-left: 0;
+    }
+  }
+
+  .clock-city {
+    font-size: var(--fs-xs);
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--fg-muted);
+  }
+
+  .clock-time {
+    font-size: var(--fs-xl);
+    font-weight: 500;
+    letter-spacing: -0.03em;
+    font-variant-numeric: tabular-nums;
+    line-height: 1.1;
+  }
+
+  .clock-meta {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: var(--fs-xs);
+    color: var(--fg-muted);
+  }
+
+  /* Accent dot during office hours (9:00–18:59 local), muted otherwise */
+  .clock-dot {
+    width: 0.5rem;
+    height: 0.5rem;
+    border-radius: 50%;
+    background: var(--line);
+  }
+
+  .clock-dot.is-open {
+    background: var(--accent);
+    box-shadow: 0 0 0 0 color-mix(in srgb, var(--accent) 60%, transparent);
+    animation: pulse 2.4s ease-out infinite;
+  }
+
+  @keyframes pulse {
+    to {
+      box-shadow: 0 0 0 0.5rem transparent;
+    }
+  }
+</style>
+
+<script>
+  const list = document.querySelector<HTMLElement>('[data-clocks]');
+
+  if (list) {
+    const lang = list.dataset.lang || 'en';
+
+    const clocks = Array.from(list.querySelectorAll<HTMLTimeElement>('[data-clock]')).map((el) => {
+      const timeZone = el.dataset.clock!;
+      const item = el.closest('li')!;
+      return {
+        el,
+        dot: item.querySelector<HTMLElement>('[data-clock-dot]'),
+        offset: item.querySelector<HTMLElement>('[data-clock-offset]'),
+        time: new Intl.DateTimeFormat(lang, { timeZone, hour: '2-digit', minute: '2-digit' }),
+        // Machine-readable 24h parts, independent of the display locale
+        parts: new Intl.DateTimeFormat('en-GB', {
+          timeZone,
+          hour: '2-digit',
+          minute: '2-digit',
+          hourCycle: 'h23',
+          timeZoneName: 'shortOffset',
+        }),
+      };
+    });
+
+    const tick = () => {
+      const now = new Date();
+      for (const clock of clocks) {
+        const label = clock.time.format(now);
+        if (clock.el.textContent !== label) clock.el.textContent = label;
+
+        const parts = Object.fromEntries(clock.parts.formatToParts(now).map((p) => [p.type, p.value]));
+        clock.el.dateTime = `${parts.hour}:${parts.minute}`;
+        if (clock.offset && parts.timeZoneName) clock.offset.textContent = parts.timeZoneName;
+
+        const hour = Number(parts.hour);
+        clock.dot?.classList.toggle('is-open', hour >= 9 && hour < 19);
+      }
+    };
+
+    tick();
+    // Re-align to the start of each minute so every clock flips together.
+    setTimeout(() => {
+      tick();
+      setInterval(tick, 60_000);
+    }, 60_000 - (Date.now() % 60_000));
+    document.addEventListener('visibilitychange', () => document.visibilityState === 'visible' && tick());
+  }
+</script>
