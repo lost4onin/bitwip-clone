@@ -1,5 +1,6 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import Header from '../../components/Header.astro';
 import { getContent, locales, type Locale } from '../../lib/i18n';
 
 export function getStaticPaths() {
@@ -17,6 +18,7 @@ const alternates = Object.fromEntries(locales.map((l) => [l, `/${l}/`]));
   description={content.site.meta.description}
   alternates={alternates}
 >
+  <Header locale={locale} alternates={alternates} />
   <main id="main" tabindex="-1">
     <h1 class="container">{content.site.hero.before} {content.site.hero.after}</h1>
   </main>

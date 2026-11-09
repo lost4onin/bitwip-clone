@@ -1,0 +1,391 @@
+---
+import { getContent, localeMeta, locales, type Locale } from '../lib/i18n';
+
+interface Props {
+  locale: Locale;
+  /** Path of the current page in each locale, used by the language switcher. */
+  alternates: Partial<Record<Locale, string>>;
+  /** Prefix for in-page anchors; empty on the homepage, `/en/` elsewhere. */
+  anchorBase?: string;
+}
+
+const { locale, alternates, anchorBase = '' } = Astro.props;
+const { site } = getContent(locale);
+const { nav } = site;
+---
+
+<header class="site-header" data-header>
+  <div class="bar container">
+    <a class="logo" href={`/${locale}/`} aria-label="Orbe Studio — home">
+      <svg viewBox="0 0 32 32" width="28" height="28" aria-hidden="true">
+        <circle cx="16" cy="16" r="10" fill="none" stroke="currentColor" stroke-width="4.5"></circle>
+        <circle cx="25" cy="7" r="3.5" fill="var(--accent)"></circle>
+      </svg>
+      <span>orbe<span class="logo-dot">.</span>studio</span>
+    </a>
+
+    <div class="bar-actions">
+      <ul class="lang-switch" role="list" aria-label={nav.language}>
+        {
+          locales.map((l) => (
+            <li>
+              <a
+                href={alternates[l] ?? `/${l}/`}
+                hreflang={l}
+                lang={l}
+                aria-current={l === locale ? 'true' : undefined}
+                aria-label={localeMeta[l].label}
+              >
+                {l.toUpperCase()}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+
+      <button
+        class="menu-toggle"
+        type="button"
+        aria-expanded="false"
+        aria-controls="site-menu"
+        data-menu-toggle
+        data-label-open={nav.menu}
+        data-label-close={nav.close}
+      >
+        <span class="menu-toggle-label" data-menu-label>{nav.menu}</span>
+        <span class="menu-toggle-icon" aria-hidden="true"><span></span><span></span></span>
+      </button>
+    </div>
+  </div>
+
+  <div class="menu" id="site-menu" data-menu>
+    <div class="menu-inner container">
+      <nav aria-label={nav.label}>
+        <ol class="menu-links" role="list">
+          {
+            nav.items.map((item, i) => (
+              <li style={`--i:${i}`}>
+                <a href={`${anchorBase}${item.href}`} data-menu-link>
+                  <span class="menu-index" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>
+                  <span class="menu-text">{item.label}</span>
+                </a>
+              </li>
+            ))
+          }
+        </ol>
+      </nav>
+
+      <div class="menu-footer">
+        <div class="theme-switch" role="group" aria-label={nav.theme.label}>
+          <button type="button" data-theme-set="dark" aria-pressed="true">{nav.theme.dark}</button>
+          <button type="button" data-theme-set="light" aria-pressed="false">{nav.theme.light}</button>
+        </div>
+        <a class="link" href={`mailto:${site.footer.email}`}>{site.footer.email}</a>
+      </div>
+    </div>
+  </div>
+</header>
+
+<style>
+  .site-header {
+    position: fixed;
+    inset: 0 0 auto;
+    z-index: 100;
+  }
+
+  .bar {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 4.5rem;
+    transition: transform var(--dur) var(--ease-out);
+  }
+
+  /* Soft backdrop once the page is scrolled */
+  .site-header::before {
+    content: '';
+    position: absolute;
+    inset: 0 0 auto;
+    height: 4.5rem;
+    background: color-mix(in srgb, var(--bg) 78%, transparent);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border-bottom: 1px solid var(--line);
+    opacity: 0;
+    transition: opacity var(--dur) ease;
+  }
+
+  .site-header.is-scrolled::before {
+    opacity: 1;
+  }
+
+  .site-header.is-open::before {
+    opacity: 0;
+  }
+
+  .logo {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    font-weight: 600;
+    font-size: 1.15rem;
+    letter-spacing: -0.03em;
+    text-decoration: none;
+  }
+
+  .logo-dot {
+    color: var(--accent-text);
+  }
+
+  .bar-actions {
+    display: flex;
+    align-items: center;
+    gap: clamp(0.75rem, 2vw, 1.5rem);
+  }
+
+  .lang-switch {
+    display: flex;
+    gap: 0.25rem;
+    font-size: var(--fs-xs);
+    font-weight: 600;
+    letter-spacing: 0.06em;
+  }
+
+  .lang-switch a {
+    display: inline-block;
+    padding: 0.5rem 0.55rem;
+    border-radius: var(--radius-pill);
+    color: var(--fg-muted);
+    text-decoration: none;
+    transition: color var(--dur-fast) ease;
+  }
+
+  .lang-switch a:hover,
+  .lang-switch a[aria-current='true'] {
+    color: var(--fg);
+  }
+
+  .lang-switch a[aria-current='true'] {
+    box-shadow: inset 0 0 0 1px var(--line);
+  }
+
+  .menu-toggle {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.65rem 0.75rem 0.65rem 1.15rem;
+    border-radius: var(--radius-pill);
+    background: var(--fg);
+    color: var(--bg);
+    font-weight: 500;
+    font-size: var(--fs-sm);
+    transition: background-color var(--dur-fast) ease, color var(--dur-fast) ease;
+  }
+
+  .menu-toggle:hover,
+  .menu-toggle[aria-expanded='true'] {
+    background: var(--accent);
+    color: var(--accent-ink);
+  }
+
+  .menu-toggle-icon {
+    display: grid;
+    gap: 5px;
+    width: 1.1rem;
+  }
+
+  .menu-toggle-icon span {
+    height: 1.5px;
+    background: currentColor;
+    border-radius: 2px;
+    transition: transform var(--dur) var(--ease-out);
+  }
+
+  [aria-expanded='true'] .menu-toggle-icon span:first-child {
+    transform: translateY(3.25px) rotate(45deg);
+  }
+
+  [aria-expanded='true'] .menu-toggle-icon span:last-child {
+    transform: translateY(-3.25px) rotate(-45deg);
+  }
+
+  /* ---------- Full-screen menu ---------- */
+  .menu {
+    position: fixed;
+    inset: 0;
+    z-index: 1;
+    background: var(--bg-elev);
+    overflow-y: auto;
+    visibility: hidden;
+    clip-path: inset(0 0 100% 0);
+    transition:
+      clip-path var(--dur-slow) var(--ease-out),
+      visibility 0s linear var(--dur-slow);
+  }
+
+  .is-open .menu {
+    visibility: visible;
+    clip-path: inset(0 0 0 0);
+    transition: clip-path var(--dur-slow) var(--ease-out);
+  }
+
+  .menu-inner {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 3rem;
+    min-height: 100%;
+    padding-block: 7rem 2rem;
+  }
+
+  .menu-links a {
+    display: flex;
+    align-items: baseline;
+    gap: 1rem;
+    padding-block: 0.15em;
+    font-size: clamp(2.5rem, 1rem + 6vw, 6.5rem);
+    font-weight: 500;
+    line-height: 1.05;
+    letter-spacing: -0.04em;
+    text-decoration: none;
+  }
+
+  .menu-links li {
+    opacity: 0;
+    transform: translateY(1.5rem);
+    transition:
+      opacity var(--dur) var(--ease-out),
+      transform var(--dur) var(--ease-out);
+  }
+
+  .is-open .menu-links li {
+    opacity: 1;
+    transform: none;
+    transition-delay: calc(150ms + var(--i) * 50ms);
+  }
+
+  .menu-index {
+    font-size: var(--fs-sm);
+    font-weight: 500;
+    letter-spacing: 0;
+    color: var(--fg-muted);
+    font-variant-numeric: tabular-nums;
+  }
+
+  .menu-text {
+    transition: transform var(--dur) var(--ease-out), color var(--dur-fast) ease;
+  }
+
+  .menu-links a:hover .menu-text,
+  .menu-links a:focus-visible .menu-text {
+    color: var(--accent-text);
+    transform: translateX(0.5rem);
+  }
+
+  .menu-footer {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1.5rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--line);
+  }
+
+  .theme-switch {
+    display: inline-flex;
+    padding: 0.25rem;
+    border-radius: var(--radius-pill);
+    box-shadow: inset 0 0 0 1px var(--line);
+  }
+
+  .theme-switch button {
+    padding: 0.55rem 1.1rem;
+    border-radius: var(--radius-pill);
+    font-size: var(--fs-sm);
+    color: var(--fg-muted);
+    transition: background-color var(--dur-fast) ease, color var(--dur-fast) ease;
+  }
+
+  .theme-switch button[aria-pressed='true'] {
+    background: var(--fg);
+    color: var(--bg);
+  }
+
+  /* Very narrow phones: keep the mark, drop the wordmark */
+  @media (max-width: 23em) {
+    .logo > span {
+      display: none;
+    }
+  }
+</style>
+
+<script>
+  const header = document.querySelector<HTMLElement>('[data-header]');
+  const toggle = document.querySelector<HTMLButtonElement>('[data-menu-toggle]');
+  const label = document.querySelector<HTMLElement>('[data-menu-label]');
+  const menu = document.querySelector<HTMLElement>('[data-menu]');
+
+  if (header && toggle && label && menu) {
+    // Everything outside the header becomes inert while the menu is open,
+    // which keeps keyboard and screen-reader focus inside the menu.
+    const outside = () =>
+      Array.from(document.body.children).filter(
+        (el): el is HTMLElement => el instanceof HTMLElement && el !== header && !el.matches('script, .skip-link'),
+      );
+
+    const setOpen = (open: boolean, { restoreFocus = true } = {}) => {
+      header.classList.toggle('is-open', open);
+      toggle.setAttribute('aria-expanded', String(open));
+      label.textContent = open ? toggle.dataset.labelClose! : toggle.dataset.labelOpen!;
+      document.documentElement.style.overflow = open ? 'hidden' : '';
+      outside().forEach((el) => (el.inert = open));
+
+      if (open) {
+        menu.querySelector<HTMLElement>('[data-menu-link]')?.focus({ preventScroll: true });
+      } else if (restoreFocus) {
+        toggle.focus({ preventScroll: true });
+      }
+    };
+
+    toggle.addEventListener('click', () => setOpen(toggle.getAttribute('aria-expanded') !== 'true'));
+
+    document.addEventListener('keydown', (event) => {
+      if (event.key === 'Escape' && header.classList.contains('is-open')) setOpen(false);
+    });
+
+    menu.querySelectorAll('[data-menu-link]').forEach((link) =>
+      link.addEventListener('click', () => setOpen(false, { restoreFocus: false })),
+    );
+
+    // Header backdrop after the first scroll
+    const onScroll = () => header.classList.toggle('is-scrolled', window.scrollY > 24);
+    onScroll();
+    window.addEventListener('scroll', onScroll, { passive: true });
+  }
+
+  // ---------- Theme switch ----------
+  const themeButtons = document.querySelectorAll<HTMLButtonElement>('[data-theme-set]');
+
+  const applyTheme = (theme: 'light' | 'dark') => {
+    document.documentElement.dataset.theme = theme;
+    themeButtons.forEach((btn) => btn.setAttribute('aria-pressed', String(btn.dataset.themeSet === theme)));
+    document.querySelector('meta[name="theme-color"]')?.setAttribute('content', theme === 'light' ? '#f4f3ee' : '#0b0b0c');
+  };
+
+  applyTheme(document.documentElement.dataset.theme === 'light' ? 'light' : 'dark');
+
+  themeButtons.forEach((btn) =>
+    btn.addEventListener('click', () => {
+      const theme = btn.dataset.themeSet === 'light' ? 'light' : 'dark';
+      applyTheme(theme);
+      try {
+        localStorage.setItem('theme', theme);
+      } catch {
+        /* storage unavailable: the choice simply won't persist */
+      }
+    }),
+  );
+</script>
