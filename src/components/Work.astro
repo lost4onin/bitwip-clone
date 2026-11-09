@@ -1,0 +1,276 @@
+---
+import { getContent, type Locale } from '../lib/i18n';
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const { work } = getContent(locale);
+const industries = Object.entries(work.industries) as [keyof typeof work.industries, string][];
+const countFor = (key: string) => work.projects.filter((p) => p.industry === key).length;
+---
+
+<section class="section work" id="work" aria-labelledby="work-title">
+  <div class="container">
+    <div class="section-head">
+      <p class="eyebrow" data-reveal>{work.label}</p>
+      <h2 class="h2" id="work-title" data-reveal>{work.title}</h2>
+    </div>
+
+    <!-- Filters are revealed by JS; without it every project is listed. -->
+    <div
+      class="filters"
+      role="group"
+      aria-label={work.filterLabel}
+      data-work-filters
+      data-announce-one={work.resultsAnnouncement.one}
+      data-announce-other={work.resultsAnnouncement.other}
+      hidden
+    >
+      <button type="button" class="filter" data-filter="all" aria-pressed="true">
+        {work.all}
+        <sup>{work.projects.length}</sup>
+      </button>
+      {
+        industries.map(([key, label]) => (
+          <button type="button" class="filter" data-filter={key} aria-pressed="false">
+            {label}
+            <sup>{countFor(key)}</sup>
+          </button>
+        ))
+      }
+    </div>
+
+    <p class="visually-hidden" aria-live="polite" data-work-status></p>
+
+    <ul class="work-grid" role="list" data-work-grid>
+      {
+        work.projects.map((project, i) => (
+          <li class="work-item" data-industry={project.industry}>
+            <article class="card" data-reveal style={`--reveal-delay:${i % 2}`}>
+              <div class="card-media">
+                <img
+                  src={project.image}
+                  alt={project.alt}
+                  width="1200"
+                  height="900"
+                  loading="lazy"
+                  decoding="async"
+                />
+              </div>
+              <div class="card-body">
+                <p class="card-meta">
+                  <span class="tag">{work.industries[project.industry as keyof typeof work.industries]}</span>
+                  <span>{project.year}</span>
+                </p>
+                <h3 class="card-title">{project.client}</h3>
+                <p class="card-challenge">
+                  <span class="visually-hidden">{work.challengeLabel}: </span>
+                  {project.challenge}
+                </p>
+              </div>
+            </article>
+          </li>
+        ))
+      }
+    </ul>
+
+    <p class="work-empty muted" data-work-empty hidden>{work.empty}</p>
+  </div>
+</section>
+
+<style>
+  /* ---------- Filters ---------- */
+  .filters {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-bottom: clamp(2rem, 4vw, 3.5rem);
+  }
+
+  .filters[hidden] {
+    display: none;
+  }
+
+  .filter {
+    padding: 0.7rem 1.15rem;
+    border-radius: var(--radius-pill);
+    box-shadow: inset 0 0 0 1px var(--line);
+    font-size: var(--fs-sm);
+    font-weight: 500;
+    transition: background-color var(--dur-fast) ease, color var(--dur-fast) ease, box-shadow var(--dur-fast) ease;
+  }
+
+  .filter sup {
+    margin-left: 0.15rem;
+    font-size: 0.7em;
+    color: var(--fg-muted);
+  }
+
+  .filter:hover {
+    box-shadow: inset 0 0 0 1px var(--fg);
+  }
+
+  .filter[aria-pressed='true'] {
+    background: var(--fg);
+    color: var(--bg);
+    box-shadow: none;
+  }
+
+  .filter[aria-pressed='true'] sup {
+    color: inherit;
+  }
+
+  /* ---------- Grid ---------- */
+  .work-grid {
+    display: grid;
+    gap: clamp(2.5rem, 5vw, 4rem) clamp(1rem, 3vw, 2.5rem);
+  }
+
+  @media (min-width: 48em) {
+    .work-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  .work-item[hidden] {
+    display: none;
+  }
+
+  .work-item.is-entering {
+    animation: card-in var(--dur) var(--ease-out) both;
+  }
+
+  @keyframes card-in {
+    from {
+      opacity: 0;
+      transform: translateY(1rem);
+    }
+  }
+
+  .card-media {
+    overflow: hidden;
+    border-radius: var(--radius);
+    background: var(--bg-elev);
+    aspect-ratio: 4 / 3;
+  }
+
+  .card-media img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform var(--dur-slow) var(--ease-out), filter var(--dur) ease;
+  }
+
+  .card:hover .card-media img {
+    transform: scale(1.04);
+  }
+
+  .card-body {
+    display: grid;
+    gap: 0.6rem;
+    padding-top: 1.25rem;
+  }
+
+  .card-meta {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    font-size: var(--fs-xs);
+    color: var(--fg-muted);
+    font-variant-numeric: tabular-nums;
+  }
+
+  .tag {
+    padding: 0.3rem 0.7rem;
+    border-radius: var(--radius-pill);
+    box-shadow: inset 0 0 0 1px var(--line);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    font-weight: 500;
+  }
+
+  .card-title {
+    font-size: var(--fs-xl);
+    letter-spacing: -0.035em;
+  }
+
+  .card-challenge {
+    max-width: 46ch;
+    color: var(--fg-muted);
+  }
+
+  .work-empty {
+    padding-block: 3rem;
+    font-size: var(--fs-lg);
+  }
+</style>
+
+<script>
+  const PARAM = 'industry';
+  const filters = document.querySelector<HTMLElement>('[data-work-filters]');
+  const grid = document.querySelector<HTMLElement>('[data-work-grid]');
+  const status = document.querySelector<HTMLElement>('[data-work-status]');
+  const empty = document.querySelector<HTMLElement>('[data-work-empty]');
+
+  if (filters && grid && status && empty) {
+    const buttons = Array.from(filters.querySelectorAll<HTMLButtonElement>('[data-filter]'));
+    const items = Array.from(grid.querySelectorAll<HTMLElement>('[data-industry]'));
+    const valid = new Set(buttons.map((b) => b.dataset.filter));
+    const plural = new Intl.PluralRules(document.documentElement.lang);
+    const announce = (count: number) => {
+      const template = plural.select(count) === 'one' ? filters.dataset.announceOne : filters.dataset.announceOther;
+      return (template ?? '{count}').replace('{count}', String(count));
+    };
+
+    const readParam = () => {
+      const value = new URLSearchParams(location.search).get(PARAM) ?? 'all';
+      return valid.has(value) ? value : 'all';
+    };
+
+    const apply = (value: string, { speak = false } = {}) => {
+      let visible = 0;
+      for (const item of items) {
+        const show = value === 'all' || item.dataset.industry === value;
+        const wasHidden = item.hidden;
+        item.hidden = !show;
+        if (show) {
+          visible++;
+          // Cards that were already revealed by scroll get a short re-entry.
+          if (wasHidden) {
+            item.querySelector('[data-reveal]')?.classList.add('is-visible');
+            item.classList.remove('is-entering');
+            void item.offsetWidth;
+            item.classList.add('is-entering');
+          }
+        }
+      }
+      buttons.forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.filter === value)));
+      empty.hidden = visible > 0;
+      if (speak) status.textContent = announce(visible);
+    };
+
+    const updateUrl = (value: string) => {
+      const url = new URL(location.href);
+      if (value === 'all') url.searchParams.delete(PARAM);
+      else url.searchParams.set(PARAM, value);
+      url.hash = 'work';
+      history.pushState({ [PARAM]: value }, '', url);
+    };
+
+    buttons.forEach((button) =>
+      button.addEventListener('click', () => {
+        const value = button.dataset.filter ?? 'all';
+        if (value === readParam()) return;
+        updateUrl(value);
+        apply(value, { speak: true });
+      }),
+    );
+
+    window.addEventListener('popstate', () => apply(readParam(), { speak: true }));
+
+    filters.hidden = false;
+    apply(readParam());
+  }
+</script>

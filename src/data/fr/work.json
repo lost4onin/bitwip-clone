@@ -4,7 +4,7 @@
   "filterLabel": "Filtrer par secteur",
   "all": "Tous",
   "empty": "Aucun projet dans ce secteur pour le moment.",
-  "resultsAnnouncement": "{count} projets affichés",
+  "resultsAnnouncement": { "one": "{count} projet affiché", "other": "{count} projets affichés" },
   "challengeLabel": "Défi",
   "industries": {
     "fintech": "Fintech",
