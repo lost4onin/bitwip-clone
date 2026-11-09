@@ -1,0 +1,242 @@
+---
+import { format, getContent, type Locale } from '../lib/i18n';
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const { testimonials } = getContent(locale);
+const total = testimonials.items.length;
+const pad = (n: number) => String(n).padStart(2, '0');
+const initials = (name: string) =>
+  name
+    .split(' ')
+    .map((part) => part[0])
+    .join('')
+    .slice(0, 2);
+---
+
+<section class="section testimonials" id="testimonials" aria-labelledby="testimonials-title">
+  <div class="container">
+    <div class="section-head">
+      <p class="eyebrow" data-reveal>{testimonials.label}</p>
+      <h2 class="h2" id="testimonials-title" data-reveal>{testimonials.title}</h2>
+    </div>
+
+    <div
+      class="carousel"
+      role="region"
+      aria-roledescription="carousel"
+      aria-label={testimonials.carouselLabel}
+      data-carousel
+      data-reveal
+    >
+      <div class="slides" aria-live="polite" data-slides>
+        {
+          testimonials.items.map((item, i) => (
+            <figure
+              class:list={['slide', { 'is-active': i === 0 }]}
+              role="group"
+              aria-roledescription="slide"
+              aria-label={format(testimonials.slideLabel, { index: i + 1, total })}
+              data-slide
+            >
+              <blockquote class="quote">
+                <p>{item.quote}</p>
+              </blockquote>
+              <figcaption class="author">
+                <span class="avatar" aria-hidden="true">
+                  {initials(item.name)}
+                </span>
+                <span>
+                  <span class="author-name">{item.name}</span>
+                  <span class="author-role">{item.role}</span>
+                </span>
+              </figcaption>
+            </figure>
+          ))
+        }
+      </div>
+
+      <div class="controls" data-carousel-controls hidden>
+        <p class="counter" aria-hidden="true">
+          <span class="counter-current" data-carousel-current>01</span>
+          <span class="counter-sep">/</span>
+          <span>{pad(total)}</span>
+        </p>
+        <div class="buttons">
+          <button type="button" class="icon-btn" data-carousel-prev aria-label={testimonials.previous}>
+            <svg width="18" height="18" viewBox="0 0 16 16" aria-hidden="true">
+              <path d="M13 8H3M7 4L3 8l4 4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"></path>
+            </svg>
+          </button>
+          <button type="button" class="icon-btn" data-carousel-next aria-label={testimonials.next}>
+            <svg width="18" height="18" viewBox="0 0 16 16" aria-hidden="true">
+              <path d="M3 8h10M9 4l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"></path>
+            </svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <slot />
+</section>
+
+<style>
+  .slides {
+    display: grid;
+    gap: 4rem;
+  }
+
+  /* With JS, slides stack in one cell so the box keeps the tallest height */
+  :global(.js) .slides {
+    gap: 0;
+  }
+
+  :global(.js) .slide {
+    grid-area: 1 / 1;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(1.25rem);
+    transition:
+      opacity var(--dur) var(--ease-out),
+      transform var(--dur) var(--ease-out),
+      visibility 0s linear var(--dur);
+  }
+
+  :global(.js) .slide.is-active {
+    opacity: 1;
+    visibility: visible;
+    transform: none;
+    transition-delay: 120ms, 120ms, 0s;
+  }
+
+  .quote {
+    position: relative;
+    max-width: 30ch;
+    font-size: clamp(1.75rem, 1rem + 3vw, 4rem);
+    font-weight: 400;
+    line-height: 1.12;
+    letter-spacing: -0.03em;
+    text-wrap: balance;
+  }
+
+  .quote::before {
+    content: '“';
+    display: block;
+    height: 0.55em;
+    font-family: var(--font-serif);
+    font-size: 2.2em;
+    line-height: 1;
+    color: var(--accent-text);
+  }
+
+  .author {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-top: clamp(2rem, 4vw, 3rem);
+  }
+
+  .avatar {
+    display: grid;
+    place-items: center;
+    width: 3.25rem;
+    height: 3.25rem;
+    border-radius: 50%;
+    background: var(--accent);
+    color: var(--accent-ink);
+    font-weight: 600;
+    font-size: var(--fs-sm);
+  }
+
+  .author-name,
+  .author-role {
+    display: block;
+  }
+
+  .author-name {
+    font-weight: 500;
+  }
+
+  .author-role {
+    font-size: var(--fs-sm);
+    color: var(--fg-muted);
+  }
+
+  /* ---------- Controls ---------- */
+  .controls {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-top: clamp(2.5rem, 5vw, 4rem);
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--line);
+  }
+
+  .controls[hidden] {
+    display: none;
+  }
+
+  .counter {
+    display: flex;
+    gap: 0.5rem;
+    font-size: var(--fs-lg);
+    font-variant-numeric: tabular-nums;
+    color: var(--fg-muted);
+  }
+
+  .counter-current {
+    color: var(--fg);
+  }
+
+  .buttons {
+    display: flex;
+    gap: 0.75rem;
+  }
+</style>
+
+<script>
+  const carousel = document.querySelector<HTMLElement>('[data-carousel]');
+
+  if (carousel) {
+    const slides = Array.from(carousel.querySelectorAll<HTMLElement>('[data-slide]'));
+    const current = carousel.querySelector<HTMLElement>('[data-carousel-current]')!;
+    const controls = carousel.querySelector<HTMLElement>('[data-carousel-controls]')!;
+    const prev = carousel.querySelector<HTMLButtonElement>('[data-carousel-prev]')!;
+    const next = carousel.querySelector<HTMLButtonElement>('[data-carousel-next]')!;
+    let index = 0;
+
+    const show = (i: number) => {
+      index = (i + slides.length) % slides.length;
+      slides.forEach((slide, n) => slide.classList.toggle('is-active', n === index));
+      current.textContent = String(index + 1).padStart(2, '0');
+    };
+
+    prev.addEventListener('click', () => show(index - 1));
+    next.addEventListener('click', () => show(index + 1));
+
+    // Arrow keys work anywhere inside the carousel region.
+    carousel.addEventListener('keydown', (event) => {
+      if (event.key === 'ArrowLeft') show(index - 1);
+      else if (event.key === 'ArrowRight') show(index + 1);
+      else return;
+      event.preventDefault();
+    });
+
+    // Basic swipe support on touch screens.
+    let startX: number | null = null;
+    carousel.addEventListener('pointerdown', (e) => (startX = e.pointerType === 'touch' ? e.clientX : null));
+    carousel.addEventListener('pointerup', (e) => {
+      if (startX === null) return;
+      const delta = e.clientX - startX;
+      if (Math.abs(delta) > 50) show(index + (delta < 0 ? 1 : -1));
+      startX = null;
+    });
+
+    controls.hidden = false;
+    show(0);
+  }
+</script>
