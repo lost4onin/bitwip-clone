@@ -10,16 +10,41 @@
     "close": "Fermer",
     "label": "Navigation principale",
     "items": [
-      { "href": "#about",        "label": "À propos" },
-      { "href": "#services",     "label": "Expertises" },
-      { "href": "#work",         "label": "Projets" },
-      { "href": "#testimonials", "label": "Clients" },
-      { "href": "#news",         "label": "Actualités" },
-      { "href": "#faq",          "label": "FAQ" },
-      { "href": "#contact",      "label": "Contact" }
+      {
+        "href": "#about",
+        "label": "À propos"
+      },
+      {
+        "href": "#services",
+        "label": "Expertises"
+      },
+      {
+        "href": "#work",
+        "label": "Projets"
+      },
+      {
+        "href": "#testimonials",
+        "label": "Clients"
+      },
+      {
+        "href": "#news",
+        "label": "Actualités"
+      },
+      {
+        "href": "#faq",
+        "label": "FAQ"
+      },
+      {
+        "href": "#contact",
+        "label": "Contact"
+      }
     ],
     "language": "Langue",
-    "theme": { "label": "Thème de couleur", "dark": "Sombre", "light": "Clair" }
+    "theme": {
+      "label": "Thème de couleur",
+      "dark": "Sombre",
+      "light": "Clair"
+    }
   },
   "hero": {
     "eyebrow": "Studio créatif & tech indépendant — depuis 2012",
@@ -32,21 +57,37 @@
     "cta": "Voir nos projets",
     "scroll": "Défiler"
   },
-  "clocks": { "title": "Nos bureaux, en ce moment" },
+  "clocks": {
+    "title": "Nos bureaux, en ce moment"
+  },
   "footer": {
     "headline": "Un projet en tête ?",
     "cta": "Parlons-en",
     "email": "bonjour@orbe-studio.example",
     "addressTitle": "Studio",
-    "address": ["12 rue des Ateliers", "75011 Paris, France"],
+    "address": [
+      "12 rue des Ateliers",
+      "75011 Paris, France"
+    ],
     "socialTitle": "Suivez-nous",
     "social": [
-      { "label": "Instagram", "href": "https://instagram.com/" },
-      { "label": "LinkedIn",  "href": "https://linkedin.com/" },
-      { "label": "Behance",   "href": "https://behance.net/" }
+      {
+        "label": "Instagram",
+        "href": "https://instagram.com/"
+      },
+      {
+        "label": "LinkedIn",
+        "href": "https://linkedin.com/"
+      },
+      {
+        "label": "Behance",
+        "href": "https://behance.net/"
+      }
     ],
     "legal": "Agence fictive. Contenu d'exemple à des fins de démonstration.",
     "credit": "Conçu et développé par Akrem Medimagh",
-    "backToTop": "Retour en haut"
+    "backToTop": "Retour en haut",
+    "navLabel": "Navigation de pied de page",
+    "newTab": "(s’ouvre dans un nouvel onglet)"
   }
 }

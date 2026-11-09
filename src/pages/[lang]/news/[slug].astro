@@ -2,6 +2,7 @@
 import { render } from 'astro:content';
 import BaseLayout from '../../../layouts/BaseLayout.astro';
 import Header from '../../../components/Header.astro';
+import Footer from '../../../components/Footer.astro';
 import { formatDate, getContent, getNews, locales, type Locale } from '../../../lib/i18n';
 
 export async function getStaticPaths() {
@@ -65,6 +66,7 @@ const { Content } = await render(article);
       </p>
     </article>
   </main>
+  <Footer locale={locale} anchorBase={`/${locale}/`} />
 </BaseLayout>
 
 <style>

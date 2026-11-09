@@ -10,16 +10,41 @@
     "close": "Close",
     "label": "Main navigation",
     "items": [
-      { "href": "#about",        "label": "About" },
-      { "href": "#services",     "label": "Services" },
-      { "href": "#work",         "label": "Work" },
-      { "href": "#testimonials", "label": "Clients" },
-      { "href": "#news",         "label": "News" },
-      { "href": "#faq",          "label": "FAQ" },
-      { "href": "#contact",      "label": "Contact" }
+      {
+        "href": "#about",
+        "label": "About"
+      },
+      {
+        "href": "#services",
+        "label": "Services"
+      },
+      {
+        "href": "#work",
+        "label": "Work"
+      },
+      {
+        "href": "#testimonials",
+        "label": "Clients"
+      },
+      {
+        "href": "#news",
+        "label": "News"
+      },
+      {
+        "href": "#faq",
+        "label": "FAQ"
+      },
+      {
+        "href": "#contact",
+        "label": "Contact"
+      }
     ],
     "language": "Language",
-    "theme": { "label": "Colour scheme", "dark": "Dark", "light": "Light" }
+    "theme": {
+      "label": "Colour scheme",
+      "dark": "Dark",
+      "light": "Light"
+    }
   },
   "hero": {
     "eyebrow": "Independent creative-tech studio — since 2012",
@@ -32,21 +57,37 @@
     "cta": "See our work",
     "scroll": "Scroll"
   },
-  "clocks": { "title": "Our offices, right now" },
+  "clocks": {
+    "title": "Our offices, right now"
+  },
   "footer": {
     "headline": "Got a project in mind?",
     "cta": "Let's talk",
     "email": "hello@orbe-studio.example",
     "addressTitle": "Studio",
-    "address": ["12 rue des Ateliers", "75011 Paris, France"],
+    "address": [
+      "12 rue des Ateliers",
+      "75011 Paris, France"
+    ],
     "socialTitle": "Follow",
     "social": [
-      { "label": "Instagram", "href": "https://instagram.com/" },
-      { "label": "LinkedIn",  "href": "https://linkedin.com/" },
-      { "label": "Behance",   "href": "https://behance.net/" }
+      {
+        "label": "Instagram",
+        "href": "https://instagram.com/"
+      },
+      {
+        "label": "LinkedIn",
+        "href": "https://linkedin.com/"
+      },
+      {
+        "label": "Behance",
+        "href": "https://behance.net/"
+      }
     ],
     "legal": "Fictional agency. Placeholder content for demonstration only.",
     "credit": "Designed & built by Akrem Medimagh",
-    "backToTop": "Back to top"
+    "backToTop": "Back to top",
+    "navLabel": "Footer navigation",
+    "newTab": "(opens in a new tab)"
   }
 }
